@@ -15,7 +15,8 @@ object Input {
             if (content.isNotEmpty()) return content
         }
 
-        val fileCache = File("C:\\Repositories\\AdventOfCode2023\\resources\\$fileName")
+        val fileCache = File("D:\\Repositories\\AdventOfCode2023\\resources\\$fileName")
+        fileCache.parentFile.mkdirs()
         fileCache.createNewFile()
 
         /* Error 400: auth :(
