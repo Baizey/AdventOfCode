@@ -12,7 +12,7 @@ object Input {
         val fileName = "day_$day.txt"
         val resource: URL? = object {}.javaClass.classLoader.getResource(fileName)
         if (resource != null) {
-            val lines = resource.openStream().bufferedReader().readLines()
+            val lines = resource.openStream().bufferedReader().useLines(Sequence<String>::toList)
             val content = lines.joinToString(separator = "\n")
             cache[day] = lines
             if (content.isNotEmpty()) return lines
@@ -25,7 +25,7 @@ object Input {
 
         try {
             val source = URI("https://adventofcode.com/2023/day/$day/input")
-            val lines = source.toURL().openStream().bufferedReader().readLines()
+            val lines = source.toURL().openStream().bufferedReader().useLines(Sequence<String>::toList)
             val content = lines.joinToString(separator = "\n")
             val writer = fileCache.bufferedWriter()
             writer.write(content)
