@@ -5,7 +5,7 @@ import java.io.IOException
 import java.net.URI
 
 object Input {
-    fun day(year: Int, day: Int): List<String> {
+    fun get(year: Int, day: Int): List<String> {
 
         val file = File("resources\\$year\\day_$day.txt")
         if (file.exists()) {

@@ -2,5 +2,5 @@ package year2016
 import utils.*
 
 fun main() {
-    val lines = Input.day(2016, 16)
+    val lines = Input.get(2016, 16)
 }

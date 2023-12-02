@@ -26,7 +26,7 @@ object Generator {
             dayFile.createNewFile()
             dayFile.writeText(content)
             try {
-                Input.day(year, day)
+                Input.get(year, day)
             } catch (e: Exception) {
                 // ignored
             }

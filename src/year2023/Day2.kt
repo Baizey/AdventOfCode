@@ -6,7 +6,7 @@ fun main() {
     data class Play(val amount: Long, val color: String)
     data class Game(val id: Long, val plays: List<Play>)
 
-    val lines = Input.day(2023, 2)
+    val lines = Input.get(2023, 2)
     val green = "green"
     val red = "red"
     val blue = "blue"

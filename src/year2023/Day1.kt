@@ -3,7 +3,7 @@ package year2023
 import utils.Input
 
 fun main() {
-    val lines = Input.day(2023, 1)
+    val lines = Input.get(2023, 1)
 
     fun part1(): Long {
         var sum = 0L
