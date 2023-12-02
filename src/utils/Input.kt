@@ -22,7 +22,7 @@ object Input {
             file.writeText(lines.joinToString(separator = System.lineSeparator()))
             return lines
         } catch (e: IOException) {
-            throw Exception("Grab content manually: https://adventofcode.com/$year/day/$day/input", e)
+            throw Exception("Grab content manually: https://adventofcode.com/$year/day/$day/input\nChallenge: https://adventofcode.com/$year/day/$day", e)
         }
     }
 }
