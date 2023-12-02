@@ -18,7 +18,6 @@ object Input {
             if (content.isNotEmpty()) return lines
         }
 
-        val a = File("").absoluteFile.path
         val fileCache = File("${File("").absoluteFile.path}\\resources\\$fileName")
         fileCache.parentFile.mkdirs()
         fileCache.createNewFile()
