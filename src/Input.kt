@@ -2,17 +2,18 @@ import java.io.File
 import java.net.URL
 
 object Input {
-    private val cache: Array<String> = Array(30) { "" }
+    private val cache: Array<List<String>> = Array(30) { listOf() }
 
-    fun day(day: Int): String {
+    fun day(day: Int): List<String> {
         if (cache[day].isNotEmpty()) return cache[day]
 
         val fileName = "day_$day.txt"
         val resource: URL? = object {}.javaClass.classLoader.getResource(fileName)
         if (resource != null) {
-            val content = resource.openStream().bufferedReader().readLines().joinToString(separator = "\n")
-            cache[day] = content
-            if (content.isNotEmpty()) return content
+            val lines = resource.openStream().bufferedReader().readLines()
+            val content = lines.joinToString(separator = "\n")
+            cache[day] = lines
+            if (content.isNotEmpty()) return lines
         }
 
         val fileCache = File("D:\\Repositories\\AdventOfCode2023\\resources\\$fileName")

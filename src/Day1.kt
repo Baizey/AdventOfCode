@@ -1,21 +1,20 @@
 fun main() {
-    val content = Input.day(1)
+    val lines = Input.day(1)
 
     fun part1(): Long {
         var sum = 0L
-        content.split("\n")
-            .forEach { line ->
-                val first = line.firstOrNull { it.isDigit() } ?: return@forEach
-                val last = line.last { it.isDigit() }
-                sum += "$first$last".toLong()
-            }
+        lines.forEach { line ->
+            val first = line.firstOrNull { it.isDigit() } ?: return@forEach
+            val last = line.last { it.isDigit() }
+            sum += "$first$last".toLong()
+        }
         return sum
     }
 
     fun part2(): Long {
         var sum = 0L
         val digits = listOf("__zero__", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
-        content.split("\n").forEach { line ->
+        lines.forEach { line ->
             var first: Char? = null
             var firstIndex = Int.MAX_VALUE
             digits.forEachIndexed { i, v ->
