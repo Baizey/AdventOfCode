@@ -3,13 +3,6 @@ package utils
 import java.io.File
 
 fun main() {
-    for (year in 2015..2023) {
-        println(year)
-        Generator.createEmptyYear(year)
-    }
-}
-
-object Generator {
     fun createEmptyYear(year: Int) {
         for (day in 1..24) {
             val content = """
@@ -31,5 +24,10 @@ object Generator {
                 // ignored
             }
         }
+    }
+
+    for (year in 2015..2023) {
+        println(year)
+        createEmptyYear(year)
     }
 }
