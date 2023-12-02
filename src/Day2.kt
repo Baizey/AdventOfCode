@@ -26,10 +26,12 @@ fun main() {
         val maxBlue = 14
         val result = games.filter { game ->
             game.plays.all {
-                if (it.color == green) it.amount <= maxGreen
-                else if (it.color == red) it.amount <= maxRed
-                else if (it.color == blue) it.amount <= maxBlue
-                else throw Exception()
+                when (it.color) {
+                    green -> it.amount <= maxGreen
+                    red -> it.amount <= maxRed
+                    blue -> it.amount <= maxBlue
+                    else -> throw Exception()
+                }
             }
         }.sumOf { it.id }
         println(result)
