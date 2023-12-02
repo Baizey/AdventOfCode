@@ -1,4 +1,6 @@
 import java.io.File
+import java.io.IOException
+import java.net.URI
 import java.net.URL
 
 object Input {
@@ -16,21 +18,23 @@ object Input {
             if (content.isNotEmpty()) return lines
         }
 
-        val fileCache = File("D:\\Repositories\\AdventOfCode2023\\resources\\$fileName")
+        val a = File("").absoluteFile.path
+        val fileCache = File("${File("").absoluteFile.path}\\resources\\$fileName")
         fileCache.parentFile.mkdirs()
         fileCache.createNewFile()
 
-        /* Error 400: auth :(
-        val source = URI("https://adventofcode.com/2023/day/$day/input")
-        val content = source.toURL().openStream().bufferedReader().readLines().joinToString(separator = "\n")
-        val writer = file.bufferedWriter()
-        writer.write(content)
-        writer.flush()
-        writer.close
-        cache[day] = content
-        return content
-        / */
-
-        TODO("Fill file with content: https://adventofcode.com/2023/day/$day/input")
+        try {
+            val source = URI("https://adventofcode.com/2023/day/$day/input")
+            val lines = source.toURL().openStream().bufferedReader().readLines()
+            val content = lines.joinToString(separator = "\n")
+            val writer = fileCache.bufferedWriter()
+            writer.write(content)
+            writer.flush()
+            writer.close()
+            cache[day] = lines
+            return lines
+        } catch (e: IOException) {
+            throw Exception("Grab content manually: https://adventofcode.com/2023/day/$day/input", e)
+        }
     }
 }
