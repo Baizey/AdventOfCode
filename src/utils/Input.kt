@@ -6,6 +6,7 @@ import java.net.URI
 
 object Input {
     fun get(year: Int, day: Int): List<String> {
+        println("Challenge: https://adventofcode.com/$year/day/$day")
 
         val file = File("resources\\$year\\day_$day.txt")
         if (file.exists()) {
@@ -22,7 +23,10 @@ object Input {
             file.writeText(lines.joinToString(separator = System.lineSeparator()))
             return lines
         } catch (e: IOException) {
-            throw Exception("Grab content manually: https://adventofcode.com/$year/day/$day/input\nChallenge: https://adventofcode.com/$year/day/$day", e)
+            throw Exception(
+                "Grab content manually: https://adventofcode.com/$year/day/$day/input\nChallenge: https://adventofcode.com/$year/day/$day",
+                e
+            )
         }
     }
 }
