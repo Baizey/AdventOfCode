@@ -24,7 +24,7 @@ object Input {
             return lines
         } catch (e: IOException) {
             throw Exception(
-                "Grab content manually: https://adventofcode.com/$year/day/$day/input\nChallenge: https://adventofcode.com/$year/day/$day",
+                "Grab content manually\nInput:     https://adventofcode.com/$year/day/$day/input",
                 e
             )
         }
