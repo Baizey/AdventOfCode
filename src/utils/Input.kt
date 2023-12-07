@@ -24,7 +24,11 @@ object Input {
             return lines
         } catch (e: IOException) {
             throw Exception(
-                "Grab content manually\nInput:     https://adventofcode.com/$year/day/$day/input",
+                """
+                Grab content manually
+                Input:     https://adventofcode.com/$year/day/$day/input,
+                File :    ${file.absolutePath},
+            """.trimIndent(),
                 e
             )
         }
