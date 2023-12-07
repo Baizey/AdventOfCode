@@ -4,11 +4,11 @@ import java.time.Month
 import kotlin.math.min
 
 fun main() {
-    Generator.generate()
+    Generator.generate(2023)
 }
 
 object Generator {
-    fun generate() {
+    fun generate(usedYear: Int? = null) {
         fun createEmptyYear(year: Int, maxDay: Int) {
             for (day in 1..maxDay) {
                 val content = """
@@ -42,14 +42,12 @@ object Generator {
 
         val today = LocalDate.now()
         val currentYear = today.year
-        for (year in 2015..currentYear) {
-            println(year)
-            val maxDay =
-                if (currentYear == year && today.month == Month.DECEMBER)
-                    min(today.dayOfMonth, 25)
-                else if (currentYear == year) 0
-                else 25
-            createEmptyYear(year, maxDay)
-        }
+        val year = usedYear ?: currentYear
+        val maxDay =
+            if (currentYear == year && today.month == Month.DECEMBER)
+                min(today.dayOfMonth, 25)
+            else if (currentYear == year) 0
+            else 25
+        createEmptyYear(year, maxDay)
     }
 }
