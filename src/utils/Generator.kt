@@ -4,7 +4,7 @@ import java.io.File
 
 fun main() {
     fun createEmptyYear(year: Int) {
-        for (day in 1..24) {
+        for (day in 1..25) {
             val content = """
             package year$year
             import utils.*
@@ -18,11 +18,6 @@ fun main() {
             dayFile.parentFile.mkdirs()
             dayFile.createNewFile()
             dayFile.writeText(content)
-            try {
-                Input.get(year, day)
-            } catch (e: Exception) {
-                // ignored
-            }
         }
     }
 
