@@ -100,14 +100,20 @@ fun main() {
     }
 
     fun part2() {
+        /**
+         * TL;DR
+         * rather than being smart, be lazy,
+         * double number of rows and columns, then make all even row/column be marked as "pipe-gap"
+         * then put in the pipe we found in prior challenge, (just 2* the cords) and add pipe tile in the connector-pipe-gap between each pair of piping
+         * from this we can just do normal bfs, where we start with the frontier on all edge-pieces (cheezed it based on my data, your pipe may touch the edge)
+         * Finally just count number of tiles still unknown, ez pz lmn sqz
+         */
         val isUnknown = 0
         val isPipe = 1
         val isPipeGap = 8
         val isOutside = 2
-        val isInside = 4
 
         fun toFake(p: Point): Point = Point(p.x * 2 + 1, p.y * 2 + 1)
-        fun toReal(p: Point): Point = Point(p.x / 2, p.y / 2)
 
         val lookup = mutableListOf<MutableList<Int>>()
         for (i in 0..<2 * chars.size) {
