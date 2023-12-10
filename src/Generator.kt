@@ -24,12 +24,8 @@ object Generator {
                 fun part2() {
                 
                 }
-                fun part3() {
-                
-                }
                 part1()
                 part2()
-                part3()
             }
         """.trimIndent()
                 val dayFile = File("src\\year$year\\Day$day.kt")
