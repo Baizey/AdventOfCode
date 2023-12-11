@@ -19,10 +19,10 @@ object Generator {
                 val lines = Input.get($year, $day)
                 
                 fun part1() {
-                
+                    
                 }
                 fun part2() {
-                
+                    
                 }
                 part1()
                 part2()
