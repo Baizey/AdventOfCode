@@ -138,8 +138,6 @@ fun main() {
         val cycles = 1_000_000_000L
         while (i < cycles) {
             runCycle()
-            //println("After ${i + 1} cycles")
-            //println(lines.joinToString(separator = "\n") { it.joinToString(separator = "") })
             var hash = 17L
             for (y in lines.indices) {
                 for (x in lines[0].indices) {
@@ -151,6 +149,7 @@ fun main() {
 
             if (seen.contains(hash)) {
                 val cycleSize = i - seen[hash]!!
+                // yarp, this could just be some quick division work, but meh fast enough is fast enough
                 while (i + cycleSize < cycles) i += cycleSize
                 while (++i < cycles) {
                     runCycle()
@@ -162,7 +161,6 @@ fun main() {
                 i++
             }
         }
-        println(calculateNorthLoad())
     }
 
     part1()
