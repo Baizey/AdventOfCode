@@ -62,11 +62,6 @@ fun main() {
         val width = lines.first().length
         val height = lines.size
 
-        println(lines.mapIndexed { y, line ->
-            line.mapIndexed { x, c -> c }.joinToString(separator = "")
-        }.joinToString(separator = "\n"))
-        println()
-
         val queue = Stack<GridNavigator>()
         queue.add(start)
 
