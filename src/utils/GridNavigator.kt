@@ -36,9 +36,7 @@ enum class Direction {
 }
 
 data class GridNavigator(var x: Int, var y: Int, var direction: Direction = unknown) {
-    fun moveForward() {
-        move(direction)
-    }
+    fun moveForward() = move(direction)
 
     fun fourDir(maxX: Int, maxY: Int): List<GridNavigator> = listOf(
         clone().move(north),
@@ -82,5 +80,17 @@ data class GridNavigator(var x: Int, var y: Int, var direction: Direction = unkn
     }
 
     fun clone() = GridNavigator(x, y, direction)
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is GridNavigator) return false
+        return other.x == x && other.y == y && (direction == other.direction.turnAround() || direction == other.direction)
+    }
+
+    override fun hashCode(): Int {
+        var result = x
+        result = 31 * result + y
+        result = 31 * result + direction.hashCode()
+        return result
+    }
 
 }
