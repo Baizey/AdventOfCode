@@ -68,19 +68,19 @@ fun main() {
         while (queue.isNotEmpty()) {
             val mover = queue.pop()
 
-            val mapX = seen.computeIfAbsent(mover.x) { HashMap() }
-            val mapY = mapX.computeIfAbsent(mover.y) { HashSet() }
+            val mapX = seen.computeIfAbsent(mover.x.toInt()) { HashMap() }
+            val mapY = mapX.computeIfAbsent(mover.y.toInt()) { HashSet() }
             if (mapY.contains(mover.direction)) continue
             mapY.add(mover.direction)
 
-            energized.compute(mover.x) { _, v ->
+            energized.compute(mover.x.toInt()) { _, v ->
                 val set = v ?: HashSet()
-                set.add(mover.y)
+                set.add(mover.y.toInt())
                 set
             }
             mover.moveForward()
-            if (!mover.isInBound(width, height)) continue
-            mover.direction.turn(lines[mover.y][mover.x]).map { GridNavigator(mover.x, mover.y, it) }.forEach { queue.add(it) }
+            if (!mover.isInBound(width.toLong(), height.toLong())) continue
+            mover.direction.turn(lines[mover.y.toInt()][mover.x.toInt()]).map { GridNavigator(mover.x, mover.y, it) }.forEach { queue.add(it) }
         }
 
         return energized.values.sumOf { it.size.toLong() } - 1L

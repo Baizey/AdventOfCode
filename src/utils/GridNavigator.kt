@@ -35,26 +35,28 @@ enum class Direction {
     }
 }
 
-data class GridNavigator(var x: Int, var y: Int, var direction: Direction = unknown) {
-    fun moveForward() = move(direction)
+data class GridNavigator(var x: Long, var y: Long, var direction: Direction = unknown) {
+    constructor(x: Int, y: Int) : this(x.toLong(), y.toLong())
+    constructor(x: Int, y: Int, direction: Direction) : this(x.toLong(), y.toLong(), direction)
 
-    fun fourDir(maxX: Int, maxY: Int): List<GridNavigator> = listOf(
-        clone().move(north),
-        clone().move(east),
-        clone().move(south),
-        clone().move(west),
-    ).filter { it.isInBound(maxX, maxY) }
+    fun moveForward() = move(direction, 1L)
+    fun fourDir(): List<GridNavigator> = listOf(
+        clone().move(north, 1L),
+        clone().move(east, 1L),
+        clone().move(south, 1L),
+        clone().move(west, 1L),
+    )
 
-    fun eightDir(maxX: Int, maxY: Int): List<GridNavigator> = listOf(
-        clone().move(north),
-        clone().move(north).move(east),
-        clone().move(east),
-        clone().move(east).move(south),
-        clone().move(south),
-        clone().move(south).move(west),
-        clone().move(west),
-        clone().move(west).move(north)
-    ).filter { it.isInBound(maxX, maxY) }
+    fun eightDir(): List<GridNavigator> = listOf(
+        clone().move(north, 1L),
+        clone().move(north, 1L).move(east, 1L),
+        clone().move(east, 1L),
+        clone().move(east, 1L).move(south, 1L),
+        clone().move(south, 1L),
+        clone().move(south, 1L).move(west, 1L),
+        clone().move(west, 1L),
+        clone().move(west, 1L).move(north, 1L)
+    )
 
     fun turnAround() = turn(direction.turnAround())
 
@@ -62,35 +64,38 @@ data class GridNavigator(var x: Int, var y: Int, var direction: Direction = unkn
 
     fun turnRight() = turn(direction.turnRight())
 
-    fun move(dir: Direction): GridNavigator {
+    fun move(dir: Direction, amount: Long): GridNavigator {
         when (dir) {
-            north -> y--
-            south -> y++
-            west -> x--
-            east -> x++
+            north -> y -= amount
+            south -> y += amount
+            west -> x -= amount
+            east -> x += amount
             unknown -> throw Error("Unknown direction")
         }
         return this
     }
 
     fun isInBound(maxX: Int, maxY: Int) = x in 0..<maxX && y in 0..<maxY
+    fun isInBound(maxX: Long, maxY: Long) = x in 0..<maxX && y in 0..<maxY
     fun turn(dir: Direction): GridNavigator {
         this.direction = dir
         return this
     }
 
+    fun copy() = clone()
+
     fun clone() = GridNavigator(x, y, direction)
 
     override fun equals(other: Any?): Boolean {
         if (other !is GridNavigator) return false
-        return other.x == x && other.y == y && (direction == other.direction.turnAround() || direction == other.direction)
+        return other.x == x && other.y == y
     }
 
     override fun hashCode(): Int {
         var result = x
         result = 31 * result + y
         result = 31 * result + direction.hashCode()
-        return result
+        return result.toInt()
     }
 
 }

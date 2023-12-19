@@ -1,6 +1,7 @@
 package utils
 
 import utils.ConsoleColor.*
+import java.util.function.BooleanSupplier
 
 @Suppress("EnumEntryName")
 enum class ConsoleColor {
@@ -35,49 +36,36 @@ object Console {
     const val cyan_text = "\u001B[36m"
     const val white_text = "\u001B[37m"
 
-    fun reset() {
-        print(reset_colors)
+    fun <T> T.color(text: ConsoleColor, background: ConsoleColor) = text(text).background(background)
+
+    fun <T> T.background(color: ConsoleColor, predicate: () -> Boolean = { true }) =
+        if (predicate()) wrap(backgroundColor(color)) else toString()
+
+    fun <T> T.text(color: ConsoleColor, predicate: () -> Boolean = { true }) =
+        if (predicate()) wrap(textColor(color)) else toString()
+
+    private fun <T> T.wrap(prefix: String) = "${prefix}$this$reset_colors"
+    fun textColor(color: ConsoleColor) = when (color) {
+        reset -> reset_colors
+        black -> black_text
+        red -> red_text
+        green -> green_text
+        yellow -> yellow_text
+        blue -> blue_text
+        purple -> purple_text
+        cyan -> cyan_text
+        white -> white_text
     }
 
-    fun textColor(color: ConsoleColor): Console {
-        val str = when (color) {
-            reset -> reset_colors
-            black -> black_text
-            red -> red_text
-            green -> green_text
-            yellow -> yellow_text
-            blue -> blue_text
-            purple -> purple_text
-            cyan -> cyan_text
-            white -> white_text
-        }
-        print(str)
-        return this
-    }
-
-    fun backgroundColor(color: ConsoleColor): Console {
-        val str = when (color) {
-            reset -> reset_colors
-            black -> black_background
-            red -> red_background
-            green -> green_background
-            yellow -> yellow_background
-            blue -> blue_background
-            purple -> purple_background
-            cyan -> cyan_background
-            white -> white_background
-        }
-        print(str)
-        return this
-    }
-
-    fun write(str: String): Console {
-        print(str)
-        return this
-    }
-
-    fun line(str: String): Console {
-        println(str)
-        return this
+    fun backgroundColor(color: ConsoleColor) = when (color) {
+        reset -> reset_colors
+        black -> black_background
+        red -> red_background
+        green -> green_background
+        yellow -> yellow_background
+        blue -> blue_background
+        purple -> purple_background
+        cyan -> cyan_background
+        white -> white_background
     }
 }

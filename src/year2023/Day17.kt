@@ -30,8 +30,8 @@ fun main() {
             val current = queue.poll()
             //println("${current.agent.x} ${current.agent.y}")
 
-            val xmap = seen.computeIfAbsent(current.agent.x) { HashMap() }
-            val ymap = xmap.computeIfAbsent(current.agent.y) { HashMap() }
+            val xmap = seen.computeIfAbsent(current.agent.x.toInt()) { HashMap() }
+            val ymap = xmap.computeIfAbsent(current.agent.y.toInt()) { HashMap() }
             val dmap = ymap.computeIfAbsent(current.agent.direction.ordinal) { HashSet() }
             if (dmap.contains(current.stepsLeft)) continue
             dmap.add(current.stepsLeft)
@@ -39,13 +39,13 @@ fun main() {
 
             if (current.cost >= best) continue
 
-            if (current.agent.x == width - 1 && current.agent.y == height - 1) {
+            if (current.agent.x.toInt() == width - 1 && current.agent.y.toInt() == height - 1) {
                 best = min(current.cost, best)
 
                 val path = current.path
                 println(lines.mapIndexed { y, line ->
                     line.mapIndexed { x, c ->
-                        val item = path.firstOrNull { it.x == x && it.y == y }
+                        val item = path.firstOrNull { it.x.toInt() == x && it.y.toInt() == y }
                         if (item != null) {
                             "${Console.red_background}${c}${Console.reset_colors}"
                         } else {
@@ -60,21 +60,21 @@ fun main() {
             if (current.stepsLeft > 0) {
                 val temp = current.agent.clone().moveForward()
                 if (temp.isInBound(width, height)) {
-                    val cost = current.cost + lines[temp.y][temp.x]
+                    val cost = current.cost + lines[temp.y.toInt()][temp.x.toInt()]
                     queue.add(QueueItem(temp, current.stepsLeft - 1, cost, current.path + listOf(temp)))
                 }
             }
             if (true) {
                 val temp = current.agent.clone().turnRight().moveForward()
                 if (temp.isInBound(width, height)) {
-                    val cost = current.cost + lines[temp.y][temp.x]
+                    val cost = current.cost + lines[temp.y.toInt()][temp.x.toInt()]
                     queue.add(QueueItem(temp, 2, cost, current.path + listOf(temp)))
                 }
             }
             if (true) {
                 val temp = current.agent.clone().turnLeft().moveForward()
                 if (temp.isInBound(width, height)) {
-                    val cost = current.cost + lines[temp.y][temp.x]
+                    val cost = current.cost + lines[temp.y.toInt()][temp.x.toInt()]
                     queue.add(QueueItem(temp, 2, cost, current.path + listOf(temp)))
                 }
             }
@@ -90,7 +90,7 @@ fun main() {
             for (i in 0..<4) {
                 agent.moveForward()
                 if (!agent.isInBound(width, height)) return
-                cost += lines[agent.y][agent.x]
+                cost += lines[agent.y.toInt()][agent.x.toInt()]
             }
             queue.add(QueueItem(agent, 6, cost, current.path + listOf(agent)))
         }
@@ -105,8 +105,8 @@ fun main() {
             val current = queue.poll()
             //println("${current.agent.x} ${current.agent.y}")
 
-            val xmap = seen.computeIfAbsent(current.agent.x) { HashMap() }
-            val ymap = xmap.computeIfAbsent(current.agent.y) { HashMap() }
+            val xmap = seen.computeIfAbsent(current.agent.x.toInt()) { HashMap() }
+            val ymap = xmap.computeIfAbsent(current.agent.y.toInt()) { HashMap() }
             val dmap = ymap.computeIfAbsent(current.agent.direction.ordinal) { HashSet() }
             if (dmap.contains(current.stepsLeft)) continue
             dmap.add(current.stepsLeft)
@@ -114,13 +114,13 @@ fun main() {
 
             if (current.cost >= best) continue
 
-            if (current.agent.x == width - 1 && current.agent.y == height - 1) {
+            if (current.agent.x.toInt() == width - 1 && current.agent.y.toInt() == height - 1) {
                 best = min(current.cost, best)
 
                 val path = current.path
                 println(lines.mapIndexed { y, line ->
                     line.mapIndexed { x, c ->
-                        val item = path.firstOrNull { it.x == x && it.y == y }
+                        val item = path.firstOrNull { it.x.toInt() == x && it.y.toInt() == y }
                         if (item != null) {
                             "${Console.red_background}${c}${Console.reset_colors}"
                         } else {
@@ -135,7 +135,7 @@ fun main() {
             if (current.stepsLeft > 0) {
                 val temp = current.agent.clone().moveForward()
                 if (temp.isInBound(width, height)) {
-                    val cost = current.cost + lines[temp.y][temp.x]
+                    val cost = current.cost + lines[temp.y.toInt()][temp.x.toInt()]
                     queue.add(QueueItem(temp, current.stepsLeft - 1, cost, current.path + listOf(temp)))
                 }
             }
