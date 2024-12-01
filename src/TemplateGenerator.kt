@@ -4,10 +4,10 @@ import java.time.Month
 import kotlin.math.min
 
 fun main() {
-    Generator.generate(2024)
+    TemplateGenerator.generate(2024)
 }
 
-object Generator {
+object TemplateGenerator {
     fun generate(usedYear: Int? = null) {
         fun createEmptyYear(year: Int, maxDay: Int) {
             for (day in 1..maxDay) {
