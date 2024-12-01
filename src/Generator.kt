@@ -4,7 +4,7 @@ import java.time.Month
 import kotlin.math.min
 
 fun main() {
-    Generator.generate(2023)
+    Generator.generate(2024)
 }
 
 object Generator {
@@ -16,7 +16,7 @@ object Generator {
             import utils.*
             
             fun main() {
-                val lines = Input.get($year, $day)
+                val rawInput = Input.get($year, $day)
                 
                 fun part1() {
                     
