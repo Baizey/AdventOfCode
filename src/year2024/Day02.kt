@@ -23,7 +23,6 @@ fun main() {
         println(lines.count(::isSafe))
     }
 
-
     fun part2() {
         var count = 0L
         lines.forEach { line ->

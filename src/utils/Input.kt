@@ -6,9 +6,12 @@ import java.net.URI
 
 object Input {
     fun get(year: Int, day: Int): List<String> {
+        migrate1(year, day)
+
         println("Challenge: https://adventofcode.com/$year/day/$day")
 
-        val file = File("resources\\$year\\day_$day.txt")
+        val fileDay = String.format("%02d", day)
+        val file = File("resources\\$year\\day_$fileDay.txt")
         if (file.exists()) {
             val lines = file.readLines()
             if (lines.isNotEmpty()) return lines
@@ -31,6 +34,18 @@ object Input {
             """.trimIndent(),
                 e
             )
+        }
+    }
+
+    private fun migrate1(year: Int, day: Int) {
+        val oldFile = File("resources\\$year\\day_$day.txt")
+        if (oldFile.exists()) {
+            val content = oldFile.readText()
+            val dayWithStart = String.format("%02d", day)
+            val newFile = File("resources\\$year\\day_$dayWithStart.txt")
+            newFile.createNewFile()
+            newFile.writeText(content)
+            oldFile.delete()
         }
     }
 }
