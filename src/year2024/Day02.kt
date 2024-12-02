@@ -1,6 +1,7 @@
 package year2024
 
 import utils.*
+import java.util.stream.IntStream.range
 import kotlin.math.abs
 
 fun isSafe(line: List<Int>): Boolean {
@@ -24,18 +25,11 @@ fun main() {
     }
 
     fun part2() {
-        var count = 0L
-        lines.forEach { line ->
-            if (isSafe(line)) count++
-            else {
-                for (i in 0..line.lastIndex) {
-                    val tmp = line.filterIndexed { index, _ -> index != i }
-                    if (isSafe(tmp)) {
-                        count++
-                        break
-                    }
-                }
-            }
+        val count = lines.count { line ->
+            if (isSafe(line)) true
+            else range(0, line.size)
+                .mapToObj { i -> line.filterIndexed { index, _ -> index != i } }
+                .anyMatch { isSafe(it) }
         }
         println(count)
     }
