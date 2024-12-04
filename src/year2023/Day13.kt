@@ -2,7 +2,7 @@ package year2023
 import utils.*
 
 fun main() {
-    val rawInput = Input.get(2023, 13)
+    val rawInput = Input.get(2023, 13).asLines()
     
     fun part1() {
         

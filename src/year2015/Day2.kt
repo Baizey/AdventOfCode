@@ -4,7 +4,7 @@ import utils.*
 import kotlin.math.min
 
 fun main() {
-    val lines = Input.get(2015, 2)
+    val lines = Input.get(2015, 2).asLines()
 
     fun part1() {
         var total = 0L

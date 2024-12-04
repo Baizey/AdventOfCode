@@ -12,7 +12,7 @@ fun main() {
     val high = "high"
     val handOrder = listOf(high, pair, twoPair, threeOfAKind, fullHouse, fourOfAKind, fiveOfAKind)
 
-    val lines = Input.get(2023, 7)
+    val lines = Input.get(2023, 7).asLines()
 
     fun part1() {
         val cardOrder = "AKQJT98765432".reversed()

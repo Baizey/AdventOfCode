@@ -35,7 +35,7 @@ fun main() {
         }
     }
 
-    val actions = Input.get(2015, 7).map {
+    val actions = Input.get(2015, 7).asLines().map {
         val type = if (it.contains(and)) and
         else if (it.contains(or)) or
         else if (it.contains(lshift)) lshift

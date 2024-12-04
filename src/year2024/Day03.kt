@@ -3,7 +3,7 @@ package year2024
 import utils.Input
 
 fun main() {
-    val rawInput = Input.get(2024, 3).joinToString(separator = " ")
+    val rawInput = Input.get(2024, 3).asString()
 
     fun part1() {
         val regex = Regex("""mul\((\d+),(\d+)\)""")

@@ -31,7 +31,7 @@ fun main() {
         }
     }
 
-    val cards = Input.get(2023, 4).map { line ->
+    val cards = Input.get(2023, 4).asLines().map { line ->
         val id = line.split(":")[0].split("Card ")[1].trim().toInt()
         val winners = line.split(":")[1].split("|")[0].trim().split(Regex(" +")).map { it.toInt() }
         val numbers = line.split(":")[1].split("|")[1].trim().split(Regex(" +")).map { it.toInt() }

@@ -2,7 +2,7 @@ package year2015
 import utils.*
 
 fun main() {
-    val lines = Input.get(2015, 18)
+    val lines = Input.get(2015, 18).asLines()
     
     fun part1() {
     

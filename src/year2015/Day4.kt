@@ -4,7 +4,7 @@ import utils.Input
 import java.security.MessageDigest
 
 fun main() {
-    val hashKey = Input.get(2015, 4).first()
+    val hashKey = Input.get(2015, 4).asLines().first()
 
     fun part1() {
         for (i in 1..Int.MAX_VALUE) {

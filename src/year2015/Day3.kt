@@ -4,7 +4,7 @@ import utils.*
 import java.awt.Point
 
 fun main() {
-    val chars = Input.get(2015, 3).flatMap { it.toCharArray().toList() }
+    val chars = Input.get(2015, 3).asLines().flatMap { it.toCharArray().toList() }
 
     fun walk(chars: List<Char>): HashMap<Int, HashSet<Int>> {
         val at = Point(0, 0)

@@ -3,7 +3,7 @@ package year2023
 import utils.*
 
 fun main() {
-    val lines = Input.get(2023, 3)
+    val lines = Input.get(2023, 3).asLines()
 
     fun Char.isSymbol() = !(this.isDigit() || this == '.')
 

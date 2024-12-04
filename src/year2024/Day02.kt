@@ -18,7 +18,7 @@ fun isSafe(line: List<Int>): Boolean {
 }
 
 fun main() {
-    val lines = Input.get(2024, 2).map { line -> line.split(" ").map { it.toInt() } }
+    val lines = Input.get(2024, 2).asIntLines()
 
     fun part1() {
         println(lines.count(::isSafe))

@@ -4,8 +4,7 @@ import utils.*
 import kotlin.math.abs
 
 fun main() {
-    val rawInput = Input.get(2024, 1)
-    val lines = rawInput.map { line -> line.split(" ").filter { it.isNotEmpty() }.map { it.toInt() } }
+    val lines = Input.get(2024, 1).asIntLines()
     val left = lines.map { it[0] }.sorted()
     val right = lines.map { it[1] }.sorted()
 

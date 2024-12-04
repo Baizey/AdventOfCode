@@ -5,7 +5,7 @@ import utils.*
 fun main() {
     data class Race(val time: Long, val distance: Long)
 
-    val lines = Input.get(2023, 6)
+    val lines = Input.get(2023, 6).asLines()
 
     fun part1() {
         val times = lines.first().split(Regex(" +")).stream().skip(1).map { it.toLong() }.toList()

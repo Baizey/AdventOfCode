@@ -5,7 +5,15 @@ import java.io.IOException
 import java.net.URI
 
 object Input {
-    fun get(year: Int, day: Int): List<String> {
+
+    data class InputData(private val rawText: List<String>) {
+        fun asIntLines(separator: String = " ") = rawText.map { line -> line.split(separator).filter { it.isNotEmpty() }.map { it.toInt() } }
+        fun asCharGrid() = rawText.map { line -> line.chars().mapToObj { it.toChar() }.toList() }
+        fun asString() = rawText.joinToString(separator = "\n")
+        fun asLines() = rawText
+    }
+
+    fun get(year: Int, day: Int): InputData {
         migrate1(year, day)
 
         println("Challenge: https://adventofcode.com/$year/day/$day")
@@ -14,7 +22,7 @@ object Input {
         val file = File("resources\\$year\\day_$fileDay.txt")
         if (file.exists()) {
             val lines = file.readLines()
-            if (lines.isNotEmpty()) return lines
+            if (lines.isNotEmpty()) return InputData(lines)
         }
 
         file.parentFile.mkdirs()
@@ -24,16 +32,16 @@ object Input {
             val source = URI("https://adventofcode.com/$year/day/$day/input")
             val lines = source.toURL().openStream().bufferedReader().useLines(Sequence<String>::toList)
             file.writeText(lines.joinToString(separator = System.lineSeparator()))
-            return lines
+            return InputData(lines)
         } catch (e: IOException) {
-            throw Exception(
+            println(
                 """
-                Grab content manually
-                Input:     https://adventofcode.com/$year/day/$day/input,
-                File :    ${file.absolutePath},
-            """.trimIndent(),
-                e
+                Grab input manually
+                Input:     https://adventofcode.com/$year/day/$day/input
+                File :     file:///${file.absolutePath.replace(Regex("\\\\"), "/")}
+            """.trimIndent()
             )
+            throw Exception()
         }
     }
 

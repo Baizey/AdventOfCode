@@ -3,7 +3,7 @@ package year2015
 import utils.*
 
 fun main() {
-    val lines = Input.get(2015, 5)
+    val lines = Input.get(2015, 5).asLines()
 
     fun part1() {
         val result = lines.filter { line ->

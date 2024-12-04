@@ -13,7 +13,7 @@ fun main() {
 
     data class Action(val type: String, val from: Point, val to: Point)
 
-    val actions = Input.get(2015, 6).map { line ->
+    val actions = Input.get(2015, 6).asLines().map { line ->
         val type = if (line.startsWith(on)) on else if (line.startsWith(off)) off else toggle
         val from = line.removePrefix(type).split("through").first().trim().split(",").map { it.toInt() }
         val to = line.removePrefix(type).split("through").last().trim().split(",").map { it.toInt() }

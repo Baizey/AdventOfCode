@@ -3,7 +3,7 @@ package year2015
 import utils.*
 
 fun main() {
-    val lines = Input.get(2015, 1).joinToString(separator = "")
+    val lines = Input.get(2015, 1).asLines().joinToString(separator = "")
 
     fun part1() {
         var at = 0

@@ -8,7 +8,7 @@ fun main() {
     data class Temp(val instruction: String, val index: Int)
     data class Looper(val steps: List<Long>, val restartFrom: Int)
 
-    val lines = Input.get(2023, 8)
+    val lines = Input.get(2023, 8).asLines()
     val firstLine = lines.first().toCharArray()
 
     val instructions = lines.drop(2).map {

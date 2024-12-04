@@ -49,7 +49,7 @@ fun main() {
 
     var source = ""
     var destination = ""
-    Input.get(2023, 5)
+    Input.get(2023, 5).asLines()
         .map(String::trim)
         .filter(String::isNotBlank)
         .forEach { line ->

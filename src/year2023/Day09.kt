@@ -3,7 +3,7 @@ package year2023
 import utils.*
 
 fun main() {
-    val lines = Input.get(2023, 9).map { line -> line.split(" ").map { it.toLong() } }
+    val lines = Input.get(2023, 9).asLines().map { line -> line.split(" ").map { it.toLong() } }
 
     fun part1() {
         fun calcForwardNext(value: List<Long>): Long {

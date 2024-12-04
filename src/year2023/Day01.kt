@@ -3,7 +3,7 @@ package year2023
 import utils.Input
 
 fun main() {
-    val lines = Input.get(2023, 1)
+    val lines = Input.get(2023, 1).asLines()
 
     fun part1(): Long {
         var sum = 0L

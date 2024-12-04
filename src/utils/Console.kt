@@ -1,7 +1,6 @@
 package utils
 
 import utils.ConsoleColor.*
-import java.util.function.BooleanSupplier
 
 @Suppress("EnumEntryName")
 enum class ConsoleColor {
@@ -36,7 +35,7 @@ object Console {
     const val cyan_text = "\u001B[36m"
     const val white_text = "\u001B[37m"
 
-    fun <T> T.color(text: ConsoleColor, background: ConsoleColor) = text(text).background(background)
+    fun <T> T.color(textColor: ConsoleColor, backgroundColor: ConsoleColor) = text(textColor).background(backgroundColor)
 
     fun <T> T.background(color: ConsoleColor, predicate: () -> Boolean = { true }) =
         if (predicate()) wrap(backgroundColor(color)) else toString()
