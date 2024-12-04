@@ -19,7 +19,7 @@ object TemplateGenerator {
             import utils.*
             
             fun main() {
-                val rawInput = Input.get($year, $day)
+                val input = Input.get($year, $day)
                 
                 fun part1() {
                     
