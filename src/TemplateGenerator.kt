@@ -4,7 +4,7 @@ import java.time.Month
 import kotlin.math.min
 
 fun main() {
-    TemplateGenerator.generate(2023)
+    TemplateGenerator.generate(2024)
 }
 
 object TemplateGenerator {
