@@ -4,7 +4,7 @@ import utils.GridNavigator
 import utils.Input
 
 fun main() {
-    val grid = Input.get(2024, 4).map { it.toCharArray() }
+    val grid = Input.get(2024, 4).asCharGrid()
 
     val letters = arrayOf('M', 'A', 'S')
     fun walk(at: GridNavigator, maxX: Int, maxY: Int): Boolean {
@@ -22,10 +22,10 @@ fun main() {
         var result = 0L
         val maxY = grid.size
         val maxX = grid[0].size
-        for (y in 0..<maxY) {
-            for (x in 0..<maxX) {
+        for (x in 0..<maxX) {
+            for (y in 0..<maxY) {
                 if (grid[y][x] == 'X')
-                    for (d in GridNavigator(y, x).allDirs())
+                    for (d in GridNavigator(x, y).allDirs())
                         if (walk(d, maxX, maxY))
                             result++
             }
@@ -38,9 +38,9 @@ fun main() {
         val maxY = grid.size
         val maxX = grid[0].size
 
-        for (y in 0..<maxY) {
-            for (x in 0..<maxX) {
-                val at = GridNavigator(y, x)
+        for (x in 0..<maxX) {
+            for (y in 0..<maxY) {
+                val at = GridNavigator(x, y)
                 if (at.valueOf(grid) != 'A') continue
                 val dirs = at.diagonalDirs()
                 if (dirs.any { it.isNotInBound(maxX, maxY) }) continue
