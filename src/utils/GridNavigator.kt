@@ -51,9 +51,24 @@ enum class Direction {
     }
 }
 
-data class GridNavigator(var x: Long, var y: Long, var direction: Direction = unknown) {
-    constructor(x: Int, y: Int) : this(x.toLong(), y.toLong())
-    constructor(x: Int, y: Int, direction: Direction) : this(x.toLong(), y.toLong(), direction)
+data class GridNavigator(
+    var x: Long,
+    var y: Long,
+    var direction: Direction = unknown,
+) {
+
+    companion object {
+        fun <T> find(value: T, grid: List<List<T>>): GridNavigator {
+            for (y in grid.indices) {
+                for (x in grid[y].indices) {
+                    if (grid[y][x] == value) return GridNavigator(x, y)
+                }
+            }
+            throw Error("Value not found")
+        }
+    }
+
+    constructor(x: Int, y: Int, direction: Direction = unknown) : this(x.toLong(), y.toLong(), direction)
 
     fun xyDirs(): List<GridNavigator> = listOf(
         clone().turn(north).moveForward(),
@@ -108,10 +123,18 @@ data class GridNavigator(var x: Long, var y: Long, var direction: Direction = un
         return this
     }
 
+    fun <T> isNotInBound(grid: List<List<T>>) = !isInBound(grid)
     fun isNotInBound(maxX: Int, maxY: Int) = !isInBound(maxX, maxY)
     fun isNotInBound(maxX: Long, maxY: Long) = !isInBound(maxX, maxY)
+    fun <T> isInBound(grid: List<List<T>>) = isInBound(grid.size, grid[0].size)
     fun isInBound(maxX: Int, maxY: Int) = x in 0..<maxX && y in 0..<maxY
     fun isInBound(maxX: Long, maxY: Long) = x in 0..<maxX && y in 0..<maxY
+
+    fun <T> valueOf(grid: List<List<T>>): T = grid[y.toInt()][x.toInt()]
+    fun <T> setValue(c: T, grid: List<MutableList<T>>): GridNavigator {
+        grid[y.toInt()][x.toInt()] = c
+        return this
+    }
 
     fun copy() = clone()
 
@@ -122,17 +145,10 @@ data class GridNavigator(var x: Long, var y: Long, var direction: Direction = un
         return other.x == x && other.y == y
     }
 
-    fun valueOf(grid: List<IntArray>): Int = grid[y.toInt()][x.toInt()]
-    fun valueOf(grid: Array<IntArray>): Int = grid[y.toInt()][x.toInt()]
-    fun valueOf(grid: List<CharArray>): Char = grid[y.toInt()][x.toInt()]
-    fun valueOf(grid: Array<CharArray>): Char = grid[y.toInt()][x.toInt()]
-    fun <T> valueOf(grid: List<List<T>>): T = grid[y.toInt()][x.toInt()]
-
     override fun hashCode(): Int {
-        var result = x
-        result = 31 * result + y
-        result = 31 * result + direction.hashCode()
-        return result.toInt()
+        var result = x.toInt().shl(18)
+        result += y.toInt().shl(4)
+        result += direction.ordinal
+        return result
     }
-
 }

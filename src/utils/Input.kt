@@ -8,7 +8,7 @@ object Input {
 
     data class InputData(private val rawText: List<String>) {
         fun asIntLines(separator: String = " ") = rawText.map { line -> line.split(separator).filter { it.isNotEmpty() }.map { it.toInt() } }
-        fun asCharGrid() = rawText.map { line -> line.chars().mapToObj { it.toChar() }.toList() }
+        fun asCharGrid() = rawText.map { line -> line.chars().mapToObj { it.toChar() }.toList().toMutableList() }
         fun asString() = rawText.joinToString(separator = "\n")
         fun asLines() = rawText
     }
