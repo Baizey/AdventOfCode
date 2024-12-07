@@ -42,17 +42,13 @@ object Input {
             source.setRequestProperty("Cookie", "session=$session")
             val lines = BufferedReader(InputStreamReader(source.inputStream)).use { it.lines().toList() }
             file.writeText(lines.joinToString(separator = "\n"))
+            source.disconnect()
             return InputData(lines)
         } catch (e: IOException) {
-            printInfo(
-                listOf(
-                    "Input : https://adventofcode.com/$year/day/$day/input",
-                    "File  : file:///${file.absolutePath.replace(Regex("\\\\"), "/")}",
-                )
-            )
-            throw Exception("Input data is missing")
-        } finally {
             source.disconnect()
+            println("Link : https://adventofcode.com/$year/day/$day/input")
+            println("File : file:///${file.absolutePath.replace(Regex("\\\\"), "/")}")
+            throw e
         }
     }
 
@@ -79,16 +75,6 @@ object Input {
             throw Exception("Grab session token form site and put in config.properties : session property")
         } finally {
             source.disconnect()
-        }
-    }
-
-    private fun printInfo(lines: List<String>) {
-        val max = lines.maxOf { it.length }
-        val br = "+-" + "-".repeat(max) + "-+"
-        println(br)
-        for (line in lines) {
-            println("| $line${" ".repeat(max - line.length)} |")
-            println(br)
         }
     }
 
