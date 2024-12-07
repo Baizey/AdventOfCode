@@ -26,13 +26,7 @@ object Input {
 
         val fileDay = String.format("%02d", day)
         val file = File("resources\\$year\\day_$fileDay.txt")
-        printInfo(
-            listOf(
-                "Info  : https://adventofcode.com/$year/day/$day",
-                "Input : https://adventofcode.com/$year/day/$day/input",
-                "File  : file:///${file.absolutePath.replace(Regex("\\\\"), "/")}",
-            )
-        )
+        println("Info : https://adventofcode.com/$year/day/$day")
 
         if (file.exists()) {
             val lines = file.readLines()
@@ -47,10 +41,16 @@ object Input {
             val session = Config.get()["session"]
             source.setRequestProperty("Cookie", "session=$session")
             val lines = BufferedReader(InputStreamReader(source.inputStream)).use { it.lines().toList() }
-            file.writeText(lines.joinToString(separator = System.lineSeparator()))
+            file.writeText(lines.joinToString(separator = "\n"))
             return InputData(lines)
         } catch (e: IOException) {
-            throw Exception("Grab input from link and put in file")
+            printInfo(
+                listOf(
+                    "Input : https://adventofcode.com/$year/day/$day/input",
+                    "File  : file:///${file.absolutePath.replace(Regex("\\\\"), "/")}",
+                )
+            )
+            throw Exception("Input data is missing")
         } finally {
             source.disconnect()
         }
