@@ -6,13 +6,13 @@ import utils.Direction.*
 enum class Direction {
     unknown,
     north,
-    south,
-    west,
-    east,
     northeast,
-    northwest,
+    east,
     southeast,
-    southwest;
+    south,
+    southwest,
+    west,
+    northwest;
 
     fun turnAround() = when (this) {
         north -> south
