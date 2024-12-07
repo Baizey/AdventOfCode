@@ -3,6 +3,7 @@ package year2024
 import utils.Direction.north
 import utils.GridNavigator
 import utils.Input
+import utils.Helpers.clone
 
 fun main() {
     val originalGrid = Input.get(2024, 6).asCharGrid()
@@ -22,13 +23,13 @@ fun main() {
         grid.flatten().count { it == 'X' }.also(::println)
     }
 
-    fun isLoop(start: GridNavigator): Boolean {
+    fun isLoop(start: GridNavigator, grid: List<List<Char>>): Boolean {
         val seen = mutableSetOf<Int>()
         val at = start.clone()
         while (true) {
             val c = at.clone().moveForward()
-            if (c.isNotInBound(originalGrid)) break
-            if (c.valueOf(originalGrid) == '#') at.turnRight()
+            if (c.isNotInBound(grid)) break
+            if (c.valueOf(grid) == '#') at.turnRight()
             else {
                 at.moveForward()
                 if (seen.contains(at.hashCode())) return true
@@ -40,16 +41,17 @@ fun main() {
 
     fun part2() {
         val at = start.clone()
+        val grid = originalGrid.clone()
         var count = 0
         while (true) {
-            val c = at.setValue('X', originalGrid).clone().moveForward()
+            val c = at.setValue('X', grid).clone().moveForward()
             when {
-                c.isNotInBound(originalGrid) -> break
-                c.valueOf(originalGrid) == '#' -> at.turnRight()
-                c.valueOf(originalGrid) != 'X' -> {
-                    c.setValue('#', originalGrid)
-                    if (isLoop(at)) count++
-                    c.setValue(' ', originalGrid)
+                c.isNotInBound(grid) -> break
+                c.valueOf(grid) == '#' -> at.turnRight()
+                c.valueOf(grid) != 'X' -> {
+                    c.setValue('#', grid)
+                    if (isLoop(at, grid)) count++
+                    c.setValue(' ', grid)
                     at.moveForward()
                 }
 

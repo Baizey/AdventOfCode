@@ -1,10 +1,10 @@
 package year2024
 
 import utils.*
-import utils.Input.println
+import utils.Helpers.println
 
 fun main() {
-    val input = Input.get(2024, 7).asLines().map { it.replace(":", "").split(" ").map { it.toLong() } }
+    val input = Input.get(2024, 7).asLongLines()
 
     fun part1() {
         input
