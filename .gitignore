@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 resources
+config.conf
 
 ### Eclipse ###
 .apt_generated
