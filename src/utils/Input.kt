@@ -6,6 +6,8 @@ import java.net.URI
 
 object Input {
 
+    fun Any.println() = println(this)
+
     data class InputData(private val rawText: List<String>) {
         fun asIntLines(separator: String = " ") = rawText.map { line -> line.split(separator).filter { it.isNotEmpty() }.map { it.toInt() } }
         fun asCharGrid() = rawText.map { line -> line.chars().mapToObj { it.toChar() }.toList().toMutableList() }
