@@ -42,11 +42,7 @@ object TemplateGenerator {
         val today = LocalDate.now()
         val currentYear = today.year
         val year = usedYear ?: currentYear
-        val maxDay =
-            if (currentYear == year && today.month == Month.DECEMBER)
-                min(today.dayOfMonth, 25)
-            else if (currentYear == year) 0
-            else 25
+        val maxDay = 25
         createEmptyYear(year, maxDay)
     }
 
