@@ -9,14 +9,13 @@ fun main() {
     fun part1() {
         input
             .filter { data ->
-                val result = data[0]
-                var currentNums = listOf(data[1])
+                var nums = listOf(data[1])
                 data.subList(2, data.size).forEach { num ->
-                    val mul = currentNums.map { it * num }
-                    val add = currentNums.map { it + num }
-                    currentNums = add + mul
+                    val mul = nums.map { it * num }
+                    val add = nums.map { it + num }
+                    nums = add + mul
                 }
-                currentNums.contains(result)
+                nums.contains(data[0])
             }
             .sumOf { it[0] }
             .println()
@@ -25,15 +24,14 @@ fun main() {
     fun part2() {
         input
             .filter { data ->
-                val result = data[0]
-                var currentNums = listOf(data[1])
+                var nums = listOf(data[1])
                 data.subList(2, data.size).forEach { num ->
-                    val mul = currentNums.map { it * num }
-                    val add = currentNums.map { it + num }
-                    val concat = currentNums.map { (it.toString() + num.toString()).toLong() }
-                    currentNums = add + mul + concat
+                    val mul = nums.map { it * num }
+                    val add = nums.map { it + num }
+                    val concat = nums.map { (it.toString() + num.toString()).toLong() }
+                    nums = add + mul + concat
                 }
-                currentNums.contains(result)
+                nums.contains(data[0])
             }
             .sumOf { it[0] }
             .println()
