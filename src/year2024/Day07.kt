@@ -10,9 +10,8 @@ fun main() {
         input
             .filter { data ->
                 val result = data[0]
-                val nums = data.subList(2, data.size)
                 var currentNums = listOf(data[1])
-                nums.forEach { num ->
+                data.subList(2, data.size).forEach { num ->
                     val mul = currentNums.map { it * num }
                     val add = currentNums.map { it + num }
                     currentNums = add + mul
@@ -27,9 +26,8 @@ fun main() {
         input
             .filter { data ->
                 val result = data[0]
-                val nums = data.subList(2, data.size)
                 var currentNums = listOf(data[1])
-                nums.forEach { num ->
+                data.subList(2, data.size).forEach { num ->
                     val mul = currentNums.map { it * num }
                     val add = currentNums.map { it + num }
                     val concat = currentNums.map { (it.toString() + num.toString()).toLong() }
