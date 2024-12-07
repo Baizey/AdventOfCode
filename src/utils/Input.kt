@@ -16,10 +16,16 @@ object Input {
     fun get(year: Int, day: Int): InputData {
         migrate1(year, day)
 
-        println("Challenge: https://adventofcode.com/$year/day/$day")
-
         val fileDay = String.format("%02d", day)
         val file = File("resources\\$year\\day_$fileDay.txt")
+        printInfo(
+            listOf(
+                "Info  : https://adventofcode.com/$year/day/$day",
+                "Input : https://adventofcode.com/$year/day/$day/input",
+                "File  : file:///${file.absolutePath.replace(Regex("\\\\"), "/")}",
+            )
+        )
+
         if (file.exists()) {
             val lines = file.readLines()
             if (lines.isNotEmpty()) return InputData(lines)
@@ -34,14 +40,17 @@ object Input {
             file.writeText(lines.joinToString(separator = System.lineSeparator()))
             return InputData(lines)
         } catch (e: IOException) {
-            println(
-                """
-                Grab input manually
-                Input:     https://adventofcode.com/$year/day/$day/input
-                File :     file:///${file.absolutePath.replace(Regex("\\\\"), "/")}
-            """.trimIndent()
-            )
-            throw Exception()
+            throw Exception("Grab input from link and put in file")
+        }
+    }
+
+    private fun printInfo(lines: List<String>) {
+        val max = lines.maxOf { it.length }
+        val br = "+-" + "-".repeat(max) + "-+"
+        println(br)
+        for (line in lines) {
+            println("| $line${" ".repeat(max - line.length)} |")
+            println(br)
         }
     }
 
