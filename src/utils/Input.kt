@@ -65,10 +65,10 @@ object Input {
             source.doOutput = true
             source.outputStream.use { it.write(content.toByteArray(UTF_8)) }
             val responseMessage = source.inputStream.bufferedReader().use { it.readText() }
-            val message = responseMessage.substring(
-                responseMessage.indexOf("<main>"),
-                responseMessage.lastIndexOf("</main>")
-            ).replace(Regex("[<\\[]/?[\\w/\"= ]+[>\\]_:]"), "").trim()
+            val message = responseMessage
+                .substring(responseMessage.indexOf("<main>"), responseMessage.indexOf("</main>"))
+                .replace(Regex("[<\\[].+?[>\\]_:]"), "")
+                .trim()
             println("Response: $message")
 
         } catch (e: IOException) {
