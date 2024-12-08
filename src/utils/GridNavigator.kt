@@ -145,6 +145,8 @@ data class GridNavigator(
         return other.x == x && other.y == y
     }
 
+    fun hash(): Long = x.shl(32) + y
+
     override fun hashCode(): Int {
         var result = x.toInt().shl(18)
         result += y.toInt().shl(4)
