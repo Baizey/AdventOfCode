@@ -1,22 +1,13 @@
 package year2024
 
 import utils.GridNavigator
+import utils.Helpers.groupSymbols
 import utils.Helpers.println
 import utils.Input
 
 fun main() {
     val input = Input.get(2024, 8).asCharGrid()
-
-    val lookup = mutableMapOf<Char, MutableList<GridNavigator>>()
-    for (y in 0..input.lastIndex) {
-        for (x in 0..input[0].lastIndex) {
-            if (input[y][x] != '.') {
-                val value = GridNavigator(x, y)
-                val key = value.valueOf(input)
-                lookup.computeIfAbsent(key) { mutableListOf() }.add(value)
-            }
-        }
-    }
+    val lookup = input.groupSymbols { it != '.' }
 
     fun part1() {
         lookup.values
