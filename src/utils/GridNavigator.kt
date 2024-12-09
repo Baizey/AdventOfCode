@@ -140,17 +140,10 @@ data class GridNavigator(
 
     fun clone() = GridNavigator(x, y, direction)
 
-    override fun equals(other: Any?): Boolean {
-        if (other !is GridNavigator) return false
-        return other.x == x && other.y == y
-    }
+    override fun equals(other: Any?): Boolean = if (other !is GridNavigator) false else other.x == x && other.y == y
+    override fun hashCode(): Int = x.toInt().shl(16) + y.toInt()
 
     fun hash(): Long = x.shl(32) + y
 
-    override fun hashCode(): Int {
-        var result = x.toInt().shl(18)
-        result += y.toInt().shl(4)
-        result += direction.ordinal
-        return result
-    }
+    fun hashWithDirection(): Long = x.shl(34) + y.shl(4) + direction.ordinal
 }

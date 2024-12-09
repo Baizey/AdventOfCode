@@ -24,7 +24,7 @@ fun main() {
     }
 
     fun isLoop(start: GridNavigator, grid: List<List<Char>>): Boolean {
-        val seen = mutableSetOf<Int>()
+        val seen = mutableSetOf<Long>()
         val at = start.clone()
         while (true) {
             val c = at.clone().moveForward()
@@ -32,8 +32,8 @@ fun main() {
             if (c.valueOf(grid) == '#') at.turnRight()
             else {
                 at.moveForward()
-                if (seen.contains(at.hashCode())) return true
-                seen.add(at.hashCode())
+                if (seen.contains(at.hashWithDirection())) return true
+                seen.add(at.hashWithDirection())
             }
         }
         return false
