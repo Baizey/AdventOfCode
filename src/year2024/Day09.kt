@@ -50,21 +50,13 @@ fun main() {
         var index: Long,
         val subsections: MutableList<Section> = mutableListOf(),
     ) {
-        fun calc(): Long =
-            if (valid) {
-                val base = length * index * id
-                val extra = (length * (length - 1) / 2) * id
-                base + extra
-            } else {
-                subsections.sumOf { it.calc() }
-            }
+        fun checksum(): Long =
+            if (valid) (length * index * id) + ((length * (length - 1) / 2) * id)
+            else subsections.sumOf { it.checksum() }
 
-        override fun toString(): String {
-            return if (valid)
-                "$id".repeat(length.toInt())
-            else
-                subsections.joinToString("") { it.toString() } + ".".repeat(length.toInt())
-        }
+        override fun toString(): String =
+            if (valid) "$id".repeat(length.toInt())
+            else subsections.joinToString("") { it.toString() } + ".".repeat(length.toInt())
     }
 
     fun part2() {
@@ -91,7 +83,7 @@ fun main() {
                 }
             }
         }
-        sections.sumOf { it.calc() }.println()
+        sections.sumOf { it.checksum() }.println()
     }
 
     part1()
