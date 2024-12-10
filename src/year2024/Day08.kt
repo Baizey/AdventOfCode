@@ -1,13 +1,13 @@
 package year2024
 
 import utils.GridNavigator
-import utils.Helpers.groupSymbols
+import utils.Helpers.groupMatches
 import utils.Helpers.println
 import utils.Input
 
 fun main() {
     val input = Input.get(2024, 8).asCharGrid()
-    val lookup = input.groupSymbols { it != '.' }
+    val lookup = input.groupMatches { it != '.' }
 
     fun part1() {
         lookup.values

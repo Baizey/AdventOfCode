@@ -7,9 +7,9 @@ fun main() {
     val grid = Input.get(2024, 4).asCharGrid()
 
     val letters = arrayOf('M', 'A', 'S')
-    fun walk(at: GridNavigator, maxX: Int, maxY: Int): Boolean {
+    fun walk(at: GridNavigator): Boolean {
         for (letter in letters) {
-            if (at.isNotInBound(maxX, maxY))
+            if (at.isNotInBound(grid))
                 return false
             if (grid[at.x.toInt()][at.y.toInt()] != letter)
                 return false
@@ -26,7 +26,7 @@ fun main() {
             for (y in 0..<maxY) {
                 if (grid[y][x] == 'X')
                     for (d in GridNavigator(x, y).allDirs())
-                        if (walk(d, maxX, maxY))
+                        if (walk(d))
                             result++
             }
         }
@@ -43,7 +43,7 @@ fun main() {
                 val at = GridNavigator(x, y)
                 if (at.valueOf(grid) != 'A') continue
                 val dirs = at.diagonalDirs()
-                if (dirs.any { it.isNotInBound(maxX, maxY) }) continue
+                if (dirs.any { it.isNotInBound(grid) }) continue
                 val chars = dirs.map { it.valueOf(grid) }
                 if (chars[0] == chars[2]) continue
                 if (chars.count { it == 'M' } != 2) continue

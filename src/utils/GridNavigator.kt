@@ -111,12 +111,26 @@ data class GridNavigator(
         return this
     }
 
+    fun <T> isNextNotInBound(grid: List<List<T>>) = !isNextInBound(grid)
+    fun <T> isNextInBound(grid: List<List<T>>) = when (direction) {
+        unknown -> throw Error("Unknown direction")
+        north -> isInBound(x, y - 1)
+        northeast -> isInBound(x + 1, y - 1)
+        east -> isInBound(x + 1, y)
+        southeast -> isInBound(x + 1, y + 1)
+        south -> isInBound(x, y + 1)
+        southwest -> isInBound(x - 1, y + 1)
+        west -> isInBound(x - 1, y)
+        northwest -> isInBound(x - 1, y - 1)
+    }
+
     fun <T> isNotInBound(grid: List<List<T>>) = !isInBound(grid)
-    fun isNotInBound(maxX: Int, maxY: Int) = !isInBound(maxX, maxY)
-    fun isNotInBound(maxX: Long, maxY: Long) = !isInBound(maxX, maxY)
-    fun <T> isInBound(grid: List<List<T>>) = isInBound(grid.size, grid[0].size)
-    fun isInBound(maxX: Int, maxY: Int) = x in 0..<maxX && y in 0..<maxY
-    fun isInBound(maxX: Long, maxY: Long) = x in 0..<maxX && y in 0..<maxY
+    fun <T> isInBound(grid: List<List<T>>) = isInBound(grid[0].size, grid.size)
+
+    private fun isNotInBound(maxX: Int, maxY: Int) = !isInBound(maxX, maxY)
+    private fun isNotInBound(maxX: Long, maxY: Long) = !isInBound(maxX, maxY)
+    private fun isInBound(maxX: Int, maxY: Int) = x in 0..<maxX && y in 0..<maxY
+    private fun isInBound(maxX: Long, maxY: Long) = x in 0..<maxX && y in 0..<maxY
 
     fun <T> valueOf(grid: List<List<T>>): T = grid[y.toInt()][x.toInt()]
     fun <T> setValue(c: T, grid: List<MutableList<T>>): GridNavigator {

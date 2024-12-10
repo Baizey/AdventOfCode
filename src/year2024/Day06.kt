@@ -8,7 +8,7 @@ import utils.Input
 
 fun main() {
     val originalGrid = Input.get(2024, 6).asCharGrid()
-    val start = originalGrid.findExact { it == '^' }.turn(north)
+    val start = originalGrid.findExact { it == '^' }!!.turn(north)
     start.turn(north)
 
     fun part1() {
