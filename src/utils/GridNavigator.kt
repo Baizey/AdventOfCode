@@ -1,6 +1,7 @@
 package utils
 
 import utils.Direction.*
+import utils.Helpers.Jump
 
 @Suppress("EnumEntryName")
 enum class Direction {
@@ -85,6 +86,7 @@ data class GridNavigator(
 
     fun moveForward() = move(direction, 1L)
 
+    fun move(jumpGrid: List<List<Jump>>): GridNavigator = valueOf(jumpGrid).move(this)
     fun move(dir: Direction, amount: Long): GridNavigator {
         when (dir) {
             north -> y -= amount

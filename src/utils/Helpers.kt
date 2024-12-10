@@ -1,5 +1,6 @@
 package utils
 
+import utils.Direction.unknown
 import utils.Input.submit
 
 object Helpers {
@@ -47,13 +48,16 @@ object Helpers {
 
     class Jump {
         val distances = Array(Direction.entries.size) { GridNavigator(-1, -1) }
-        fun move(navigator: GridNavigator) {
+        fun move(navigator: GridNavigator): GridNavigator {
             val moves = get(navigator.direction)
             navigator.x = moves.x
             navigator.y = moves.y
+            return navigator
         }
 
-        fun get(direction: Direction) = distances[direction.ordinal]
+        fun get(direction: Direction) =
+            if (direction == unknown) throw Error("Unknown direction")
+            else distances[direction.ordinal]
     }
 
     fun <T> List<List<T>>.createJumpMap(
