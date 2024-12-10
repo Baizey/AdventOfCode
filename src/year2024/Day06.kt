@@ -2,12 +2,13 @@ package year2024
 
 import utils.Direction.north
 import utils.GridNavigator
-import utils.Input
 import utils.Helpers.clone
+import utils.Helpers.findExact
+import utils.Input
 
 fun main() {
     val originalGrid = Input.get(2024, 6).asCharGrid()
-    val start = GridNavigator.find('^', originalGrid)
+    val start = originalGrid.findExact { it == '^' }.turn(north)
     start.turn(north)
 
     fun part1() {

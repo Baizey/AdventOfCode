@@ -1,9 +1,11 @@
 package utils
 
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.IOException
+import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URI
-import java.net.URLEncoder
 import java.net.URLEncoder.encode
 import kotlin.text.Charsets.UTF_8
 
@@ -11,6 +13,7 @@ data class InputData(private val rawText: List<String>) {
     fun asIntLines() = rawText.map { line -> "\\d+".toRegex().findAll(line).map { it.value.toInt() }.toList() }
     fun asLongLines() = rawText.map { line -> "\\d+".toRegex().findAll(line).map { it.value.toLong() }.toList() }
     fun asCharGrid() = rawText.map { line -> line.toCharArray().toList() }
+    fun asDigitGrid() = rawText.map { line -> line.toCharArray().map { Character.digit(it, 10) } }
     fun asString() = rawText.joinToString(separator = "\n")
     fun asLines() = rawText
 }

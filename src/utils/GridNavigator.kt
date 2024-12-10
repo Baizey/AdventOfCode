@@ -56,18 +56,6 @@ data class GridNavigator(
     var y: Long,
     var direction: Direction = unknown,
 ) {
-
-    companion object {
-        fun <T> find(value: T, grid: List<List<T>>): GridNavigator {
-            for (y in grid.indices) {
-                for (x in grid[y].indices) {
-                    if (grid[y][x] == value) return GridNavigator(x, y)
-                }
-            }
-            throw Error("Value not found")
-        }
-    }
-
     constructor(x: Int, y: Int, direction: Direction = unknown) : this(x.toLong(), y.toLong(), direction)
 
     fun xyDirs(): List<GridNavigator> = listOf(
