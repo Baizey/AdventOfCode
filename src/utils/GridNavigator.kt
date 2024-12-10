@@ -114,23 +114,38 @@ data class GridNavigator(
     fun <T> isNextNotInBound(grid: List<List<T>>) = !isNextInBound(grid)
     fun <T> isNextInBound(grid: List<List<T>>) = when (direction) {
         unknown -> throw Error("Unknown direction")
-        north -> isInBound(x, y - 1)
-        northeast -> isInBound(x + 1, y - 1)
-        east -> isInBound(x + 1, y)
-        southeast -> isInBound(x + 1, y + 1)
-        south -> isInBound(x, y + 1)
-        southwest -> isInBound(x - 1, y + 1)
-        west -> isInBound(x - 1, y)
-        northwest -> isInBound(x - 1, y - 1)
+        north ->
+            isInBound(0, grid[0].size, 1, grid.size)
+
+        northeast ->
+            isInBound(0, grid[0].size - 1, 1, grid.size)
+
+        east ->
+            isInBound(0, grid[0].size - 1, 0, grid.size)
+
+        southeast ->
+            isInBound(0, grid[0].size - 1, 0, grid.size - 1)
+
+        south ->
+            isInBound(0, grid[0].size, 0, grid.size - 1)
+
+        southwest ->
+            isInBound(1, grid[0].size, 0, grid.size - 1)
+
+        west ->
+            isInBound(1, grid[0].size, 0, grid.size)
+
+        northwest ->
+            isInBound(1, grid[0].size, 1, grid.size)
     }
 
     fun <T> isNotInBound(grid: List<List<T>>) = !isInBound(grid)
-    fun <T> isInBound(grid: List<List<T>>) = isInBound(grid[0].size, grid.size)
+    fun <T> isInBound(grid: List<List<T>>) = isInBound(0, grid[0].size, 0, grid.size)
 
-    private fun isNotInBound(maxX: Int, maxY: Int) = !isInBound(maxX, maxY)
-    private fun isNotInBound(maxX: Long, maxY: Long) = !isInBound(maxX, maxY)
-    private fun isInBound(maxX: Int, maxY: Int) = x in 0..<maxX && y in 0..<maxY
-    private fun isInBound(maxX: Long, maxY: Long) = x in 0..<maxX && y in 0..<maxY
+    fun isNotInBound(minX: Int, maxX: Int, minY: Int, maxY: Int) = !isInBound(minX, maxX, minY, maxY)
+    fun isNotInBound(minX: Long, maxX: Long, minY: Long, maxY: Long) = !isInBound(minX, maxX, minY, maxY)
+    fun isInBound(minX: Int, maxX: Int, minY: Int, maxY: Int) = x in minX..<maxX && y in minY..<maxY
+    fun isInBound(minX: Long, maxX: Long, minY: Long, maxY: Long) = x in minX..<maxX && y in minY..<maxY
 
     fun <T> valueOf(grid: List<List<T>>): T = grid[y.toInt()][x.toInt()]
     fun <T> setValue(c: T, grid: List<MutableList<T>>): GridNavigator {
