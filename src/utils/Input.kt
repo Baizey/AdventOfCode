@@ -7,6 +7,8 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URLEncoder.encode
+import java.nio.file.Paths
+import kotlin.io.path.absolutePathString
 import kotlin.text.Charsets.UTF_8
 
 data class InputData(private val rawText: List<String>) {
@@ -28,7 +30,18 @@ object Input {
         migrate1(year, day)
 
         val fileDay = String.format("%02d", day)
-        val file = File("resources\\$year\\day_$fileDay.txt")
+
+        var at = File(Paths.get("").absolutePathString())
+        while (true) {
+            val resourcesDir = File(at, "resources")
+            if (resourcesDir.exists() && resourcesDir.isDirectory) {
+                break
+            }
+            at = at.parentFile
+        }
+
+
+        val file = File(at.absolutePath, "resources\\$year\\day_$fileDay.txt")
         println("Info : https://adventofcode.com/$year/day/$day")
 
         if (file.exists()) {
@@ -86,6 +99,7 @@ object Input {
         if (oldFile.exists()) {
             val content = oldFile.readText()
             val dayWithStart = String.format("%02d", day)
+            if (dayWithStart == day.toString()) return
             val newFile = File("resources\\$year\\day_$dayWithStart.txt")
             newFile.createNewFile()
             newFile.writeText(content)

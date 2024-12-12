@@ -84,6 +84,7 @@ data class GridNavigator(
         clone().turn(northwest).moveForward()
     )
 
+    fun moveBackward() = turnAround().move(direction, 1L).turnAround()
     fun moveForward() = move(direction, 1L)
 
     fun move(jumpGrid: List<List<Jump>>): GridNavigator = valueOf(jumpGrid).move(this)
@@ -149,7 +150,8 @@ data class GridNavigator(
     fun isInBound(minX: Int, maxX: Int, minY: Int, maxY: Int) = x in minX..<maxX && y in minY..<maxY
     fun isInBound(minX: Long, maxX: Long, minY: Long, maxY: Long) = x in minX..<maxX && y in minY..<maxY
 
-    fun <T> valueOf(grid: List<List<T>>): T = grid[y.toInt()][x.toInt()]
+    fun <T> valueOf(grid: List<List<T>>): T = valueOrNullOf(grid)!!
+    fun <T> valueOrNullOf(grid: List<List<T>>): T? = if (isInBound(grid)) grid[y.toInt()][x.toInt()] else null
     fun <T> setValue(c: T, grid: List<MutableList<T>>): GridNavigator {
         grid[y.toInt()][x.toInt()] = c
         return this
@@ -163,6 +165,16 @@ data class GridNavigator(
     override fun hashCode(): Int = x.toInt().shl(16) + y.toInt()
 
     fun hash(): Long = x.shl(32) + y
-
     fun hashWithDirection(): Long = x.shl(34) + y.shl(4) + direction.ordinal
+
+    companion object {
+        fun fromHash(hash: Long): GridNavigator {
+            return GridNavigator(hash.shr(32), hash.shl(32).shr(32))
+        }
+
+        fun fromHashWithDir(hash: Long): GridNavigator {
+            return GridNavigator(hash.shr(34), hash.shr(4).shl(4 + 64 - 34).shr(4 + 64 - 34), entries[hash.shl(60).shr(60).toInt()])
+        }
+    }
+
 }
