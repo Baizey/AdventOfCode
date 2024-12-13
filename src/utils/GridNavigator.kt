@@ -52,7 +52,7 @@ enum class Direction {
     }
 }
 
-data class GridNavigator(
+class GridNavigator(
     var x: Long,
     var y: Long,
     var direction: Direction = unknown,
@@ -157,24 +157,21 @@ data class GridNavigator(
         return this
     }
 
-    fun copy() = clone()
+    override fun hashCode(): Int = x.toInt().shl(16) + y.toInt()
+    override fun equals(other: Any?) = other is GridNavigator && sameWithDir(other)
+    fun sameLocation(other: GridNavigator) = x == other.x && y == other.y
+    fun sameWithDir(other: GridNavigator) = sameLocation(other) && direction == other.direction
 
+    fun copy() = clone()
     fun clone() = GridNavigator(x, y, direction)
 
-    override fun equals(other: Any?): Boolean = if (other !is GridNavigator) false else other.x == x && other.y == y
-    override fun hashCode(): Int = x.toInt().shl(16) + y.toInt()
-
+    /**
+     * Limited to 32-bit integers
+     */
     fun hash(): Long = x.shl(32) + y
-    fun hashWithDirection(): Long = x.shl(34) + y.shl(4) + direction.ordinal
 
-    companion object {
-        fun fromHash(hash: Long): GridNavigator {
-            return GridNavigator(hash.shr(32), hash.shl(32).shr(32))
-        }
-
-        fun fromHashWithDir(hash: Long): GridNavigator {
-            return GridNavigator(hash.shr(34), hash.shr(4).shl(4 + 64 - 34).shr(4 + 64 - 34), entries[hash.shl(60).shr(60).toInt()])
-        }
-    }
-
+    /**
+     * Limited to 28-bit integers
+     */
+    fun hashWithDir(): Long = x.shl(34) + y.shl(4) + direction.ordinal
 }

@@ -53,20 +53,20 @@ fun main() {
                         if (seenArea.contains(at.hash())) continue
                         seenArea.add(at.hash())
                         area++
-                        at.xyDirs().forEach { if (it.valueOrNullOf(grid) != type) perimeter[it.hashWithDirection()] = it else queue.addLast(it) }
+                        at.xyDirs().forEach { if (it.valueOrNullOf(grid) != type) perimeter[it.hashWithDir()] = it else queue.addLast(it) }
                     }
 
                     val sides = perimeter.values.toList().count { edge ->
-                        if (!perimeter.containsKey(edge.hashWithDirection())) false
+                        if (!perimeter.containsKey(edge.hashWithDir())) false
                         else {
                             var t = edge.copy().turnLeft().moveForward().turnRight()
-                            while (perimeter.containsKey(t.hashWithDirection())) {
-                                perimeter.remove(t.hashWithDirection())
+                            while (perimeter.containsKey(t.hashWithDir())) {
+                                perimeter.remove(t.hashWithDir())
                                 t.turnLeft().moveForward().turnRight()
                             }
                             t = edge.copy()
-                            while (perimeter.containsKey(t.hashWithDirection())) {
-                                perimeter.remove(t.hashWithDirection())
+                            while (perimeter.containsKey(t.hashWithDir())) {
+                                perimeter.remove(t.hashWithDir())
                                 t.turnRight().moveForward().turnLeft()
                             }
                             true

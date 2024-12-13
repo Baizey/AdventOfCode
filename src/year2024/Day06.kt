@@ -33,8 +33,8 @@ fun main() {
             if (c.valueOf(grid) == '#') at.turnRight()
             else {
                 at.moveForward()
-                if (seen.contains(at.hashWithDirection())) return true
-                seen.add(at.hashWithDirection())
+                if (seen.contains(at.hashWithDir())) return true
+                seen.add(at.hashWithDir())
             }
         }
         return false
