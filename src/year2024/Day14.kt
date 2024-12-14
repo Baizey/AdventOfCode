@@ -59,10 +59,7 @@ fun main() {
             }
         }.toMutableMap()
         groups.remove(Direction.unknown)
-        groups.map { p ->
-            println(p.key.toString() + ": " + p.value.size)
-            p.value.size
-        }.reduce { a, b -> a * b }.println(1)
+        groups.values.map { it.size }.reduce { a, b -> a * b }.println()
 
     }
 
