@@ -12,8 +12,8 @@ import kotlin.io.path.absolutePathString
 import kotlin.text.Charsets.UTF_8
 
 data class InputData(private val rawText: List<String>) {
-    fun asIntLines() = rawText.map { line -> "\\d+".toRegex().findAll(line).map { it.value.toInt() }.toList() }
-    fun asLongLines() = rawText.map { line -> "\\d+".toRegex().findAll(line).map { it.value.toLong() }.toList() }
+    fun asIntLines() = rawText.map { line -> "-?\\d+".toRegex().findAll(line).map { it.value.toInt() }.toList() }
+    fun asLongLines() = rawText.map { line -> "-?\\d+".toRegex().findAll(line).map { it.value.toLong() }.toList() }
     fun asCharGrid() = rawText.map { line -> line.toCharArray().toList() }
     fun asDigitGrid() = rawText.map { line -> line.toCharArray().map { Character.digit(it, 10) } }
     fun asString() = rawText.joinToString(separator = "\n")
