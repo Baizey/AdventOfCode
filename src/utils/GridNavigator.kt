@@ -174,4 +174,7 @@ class GridNavigator(
      * Limited to 28-bit integers
      */
     fun hashWithDir(): Long = x.shl(34) + y.shl(4) + direction.ordinal
+    operator fun component1(): Long = x
+    operator fun component2(): Long = y
+    operator fun component3(): Direction = direction
 }
