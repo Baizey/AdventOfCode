@@ -13,12 +13,12 @@ fun main() {
         robots.forEach { it.at.setValue(it.at.valueOf(grid) + 1, grid) }
         grid[maxY / 2] = MutableList(maxX) { -1 }
         grid.forEach { it[maxX / 2] = -1 }
-        grid.joinToString(separator = "\n") {
-            it.map {
+        grid.joinToString(separator = "\n") { line ->
+            line.map {
                 when (it) {
                     0 -> '.'
                     -1 -> ' '
-                    else -> Integer.toString(it)
+                    else -> it.toString()
                 }
             }.joinToString(separator = "")
         }.println()
