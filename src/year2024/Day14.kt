@@ -82,7 +82,7 @@ fun main() {
                 robot.at.y %= maxY
             }
             val lookup = robots.map { it.at.hash() }.toSet()
-            if (robots.any { it.at.allDirs().map { it.hash() }.all { lookup.contains(it) } }) {
+            if (robots.any { r -> r.at.allDirs().all { lookup.contains(it.hash()) } }) {
                 display(maxX, maxY, robots)
                 println("Seconds: $time")
                 break
