@@ -84,8 +84,10 @@ class GridNavigator(
         clone().turn(northwest).moveForward()
     )
 
-    fun moveBackward() = turnAround().move(direction, 1L).turnAround()
-    fun moveForward() = move(direction, 1L)
+    fun moveLeft(steps: Long = 1L) = move(direction.turnLeft(), steps)
+    fun moveRight(steps: Long = 1L) = move(direction.turnRight(), steps)
+    fun moveBackward(steps: Long = 1L) = move(direction.turnAround(), steps)
+    fun moveForward(steps: Long = 1L) = move(direction, steps)
 
     fun move(jumpGrid: List<List<Jump>>): GridNavigator = valueOf(jumpGrid).move(this)
     fun move(dir: Direction, amount: Long): GridNavigator {
