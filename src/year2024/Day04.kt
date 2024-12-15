@@ -1,6 +1,6 @@
 package year2024
 
-import utils.GridNavigator
+import utils.grid.GridNavigator
 import utils.Input
 
 fun main() {

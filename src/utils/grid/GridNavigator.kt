@@ -1,56 +1,10 @@
-package utils
+package utils.grid
 
-import utils.Direction.*
 import utils.Helpers.Jump
-
-@Suppress("EnumEntryName")
-enum class Direction {
-    unknown,
-    north,
-    northeast,
-    east,
-    southeast,
-    south,
-    southwest,
-    west,
-    northwest;
-
-    fun turnAround() = when (this) {
-        north -> south
-        west -> east
-        south -> north
-        east -> west
-        northeast -> southwest
-        northwest -> southeast
-        southeast -> northwest
-        southwest -> northeast
-        unknown -> throw Error("Unknown direction")
-    }
-
-    fun turnLeft() = when (this) {
-        north -> west
-        west -> south
-        south -> east
-        east -> north
-        northeast -> northwest
-        northwest -> southwest
-        southeast -> northeast
-        southwest -> southeast
-        unknown -> throw Error("Unknown direction")
-    }
-
-    fun turnRight() = when (this) {
-        north -> east
-        east -> south
-        south -> west
-        west -> north
-        northeast -> southeast
-        northwest -> northeast
-        southeast -> southwest
-        southwest -> northwest
-        unknown -> throw Error("Unknown direction")
-    }
-}
+import utils.grid.Direction.*
+import utils.grid.Direction.Companion.allDirs
+import utils.grid.Direction.Companion.diagonalDirs
+import utils.grid.Direction.Companion.xyDirs
 
 class GridNavigator(
     var x: Long,
@@ -59,30 +13,16 @@ class GridNavigator(
 ) {
     constructor(x: Int, y: Int, direction: Direction = unknown) : this(x.toLong(), y.toLong(), direction)
 
-    fun xyDirs(): List<GridNavigator> = listOf(
-        clone().turn(north).moveForward(),
-        clone().turn(east).moveForward(),
-        clone().turn(south).moveForward(),
-        clone().turn(west).moveForward(),
-    )
+    fun xyDirs(): List<GridNavigator> = xyDirs.map { clone().turn(it).moveForward() }
 
-    fun diagonalDirs(): List<GridNavigator> = listOf(
-        clone().turn(northeast).moveForward(),
-        clone().turn(southeast).moveForward(),
-        clone().turn(southwest).moveForward(),
-        clone().turn(northwest).moveForward(),
-    )
+    fun diagonalDirs(): List<GridNavigator> = diagonalDirs.map { clone().turn(it).moveForward() }
 
-    fun allDirs(): List<GridNavigator> = listOf(
-        clone().turn(north).moveForward(),
-        clone().turn(northeast).moveForward(),
-        clone().turn(east).moveForward(),
-        clone().turn(southeast).moveForward(),
-        clone().turn(south).moveForward(),
-        clone().turn(southwest).moveForward(),
-        clone().turn(west).moveForward(),
-        clone().turn(northwest).moveForward()
-    )
+    fun allDirs(): List<GridNavigator> = allDirs.map { clone().turn(it).moveForward() }
+
+    fun moveUntil(dir: Direction = direction, shouldKeepGoing: (GridNavigator) -> Boolean): GridNavigator {
+        while (shouldKeepGoing(this)) move(dir, 1L)
+        return this
+    }
 
     fun moveLeft(steps: Long = 1L) = move(direction.turnLeft(), steps)
     fun moveRight(steps: Long = 1L) = move(direction.turnRight(), steps)

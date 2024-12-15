@@ -2,6 +2,7 @@ package year2024
 
 import utils.*
 import utils.Helpers.println
+import utils.grid.GridNavigator
 
 fun main() {
     val input = Input.get(2024, 13).asLongLines()

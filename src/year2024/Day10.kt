@@ -1,6 +1,6 @@
 package year2024
 
-import utils.GridNavigator
+import utils.grid.GridNavigator
 import utils.Helpers.findMatches
 import utils.Helpers.println
 import utils.Input

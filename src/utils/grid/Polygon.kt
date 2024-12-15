@@ -1,8 +1,7 @@
-package utils
+package utils.grid
 
-import utils.Direction.*
+import utils.grid.Direction.*
 import kotlin.math.abs
-import kotlin.math.max
 import kotlin.math.min
 
 class Polygon(points: List<GridNavigator>) {

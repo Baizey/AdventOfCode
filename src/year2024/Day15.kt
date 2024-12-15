@@ -1,11 +1,12 @@
 package year2024
 
 import utils.*
-import utils.Direction.*
+import utils.grid.Direction.*
 import utils.Helpers.clone
 import utils.Helpers.findExact
 import utils.Helpers.findMatches
 import utils.Helpers.println
+import utils.grid.GridNavigator
 
 fun main() {
     val box = 'O'
@@ -137,9 +138,7 @@ fun main() {
             }
         }
 
-        display(at, grid)
         actions.forEachIndexed { i, action ->
-            //println("$i: $action")
             when (action) {
                 '^' -> at.turn(north)
                 '>' -> at.turn(east)
@@ -147,15 +146,12 @@ fun main() {
                 'v' -> at.turn(south)
             }
             val tmp = at.clone().moveForward()
-            if (tmp.isWall(grid)) {
-                // do nothing
-            } else if (tmp.isOpen(grid)) {
+            if (tmp.isOpen(grid)) {
                 at.moveForward()
             } else if (tmp.isBox(grid) && canMove(tmp.clone())) {
                 move(tmp.clone())
                 at.moveForward()
             }
-            //display(at, grid)
         }
         grid.findMatches { it == box1 }.sumOf { it.x + 100L * it.y }.println()
     }

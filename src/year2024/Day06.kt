@@ -1,7 +1,7 @@
 package year2024
 
-import utils.Direction.north
-import utils.GridNavigator
+import utils.grid.Direction.north
+import utils.grid.GridNavigator
 import utils.Helpers.clone
 import utils.Helpers.findExact
 import utils.Input

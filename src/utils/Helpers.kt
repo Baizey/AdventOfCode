@@ -1,7 +1,9 @@
 package utils
 
-import utils.Direction.unknown
+import utils.grid.Direction.unknown
 import utils.Input.submit
+import utils.grid.Direction
+import utils.grid.GridNavigator
 
 object Helpers {
     fun Any.println(level: Int? = null) = if (level != null) submit(level) else println(this)
