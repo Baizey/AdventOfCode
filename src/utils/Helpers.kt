@@ -1,6 +1,6 @@
 package utils
 
-import utils.grid.Direction.unknown
+import utils.grid.Direction.none
 import utils.Input.submit
 import utils.grid.Direction
 import utils.grid.Nav
@@ -47,39 +47,4 @@ object Helpers {
                     result.computeIfAbsent(this[y][x]) { mutableListOf() }.add(Nav(x, y))
         return result
     }
-
-    class Jump {
-        val distances = Array(Direction.entries.size) { Nav(-1, -1) }
-        fun move(navigator: Nav): Nav {
-            val moves = get(navigator.dir)
-            navigator.x = moves.x
-            navigator.y = moves.y
-            return navigator
-        }
-
-        fun get(direction: Direction) =
-            if (direction == unknown) throw Error("Unknown direction")
-            else distances[direction.ordinal]
-    }
-
-    fun <T> List<List<T>>.createJumpMap(
-        isBlocker: (T) -> Boolean,
-        dirs: (Nav) -> List<Nav> = { it.allDirs() },
-    ): List<List<Jump>> {
-        val result = this.map { line -> line.map { Jump() } }
-        val startPoints = this.findMatches(isBlocker)
-        startPoints.forEach { blocker ->
-            dirs(blocker).forEach { start ->
-                val dir = start.clone()
-                val backDir = dir.dir.turnAround().ordinal
-                while (dir.isInBound(this) && !isBlocker(dir.value(this))) {
-                    val jump = dir.value(result)
-                    jump.distances[backDir] = start
-                    dir.moveForward()
-                }
-            }
-        }
-        return result
-    }
-
 }

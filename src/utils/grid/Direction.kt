@@ -2,7 +2,7 @@ package utils.grid
 
 @Suppress("EnumEntryName")
 enum class Direction(val deltaX: Int, val deltaY: Int) {
-    unknown(0, 0),
+    none(0, 0),
     north(0, -1),
     northeast(+1, -1),
     east(+1, 0),
@@ -27,7 +27,7 @@ enum class Direction(val deltaX: Int, val deltaY: Int) {
         northwest -> southeast
         southeast -> northwest
         southwest -> northeast
-        unknown -> throw Error("Unknown direction")
+        none -> none
     }
 
     fun turnLeft() = when (this) {
@@ -39,7 +39,7 @@ enum class Direction(val deltaX: Int, val deltaY: Int) {
         northwest -> southwest
         southeast -> northeast
         southwest -> southeast
-        unknown -> throw Error("Unknown direction")
+        none -> none
     }
 
     fun turnRight() = when (this) {
@@ -51,6 +51,21 @@ enum class Direction(val deltaX: Int, val deltaY: Int) {
         northwest -> northeast
         southeast -> southwest
         southwest -> northwest
-        unknown -> throw Error("Unknown direction")
+        none -> none
+    }
+
+    operator fun times(value: Int): Nav = Nav(deltaX * value, deltaY * value, this)
+    operator fun times(value: Long): Nav = Nav(deltaX * value, deltaY * value, this)
+
+    operator fun minus(value: Direction): Direction {
+        val newX = (deltaX - value.deltaX).coerceIn(-1, 1)
+        val newY = (deltaY - value.deltaY).coerceIn(-1, 1)
+        return entries.first { it.deltaX == newX && it.deltaY == newY }
+    }
+
+    operator fun plus(value: Direction): Direction {
+        val newX = (deltaX + value.deltaX).coerceIn(-1, 1)
+        val newY = (deltaY + value.deltaY).coerceIn(-1, 1)
+        return entries.first { it.deltaX == newX && it.deltaY == newY }
     }
 }

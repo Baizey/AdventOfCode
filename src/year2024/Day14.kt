@@ -45,7 +45,7 @@ fun main() {
             val x = it.at.x
             val y = it.at.y
             if (x == maxX / 2L || y == maxY / 2L) {
-                Direction.unknown
+                Direction.none
             } else if (x < maxX / 2) {
                 if (y < maxY / 2) {
                     Direction.northwest
@@ -60,7 +60,7 @@ fun main() {
                 }
             }
         }.toMutableMap()
-        groups.remove(Direction.unknown)
+        groups.remove(Direction.none)
         groups.values.map { it.size }.reduce { a, b -> a * b }.println()
 
     }
