@@ -75,27 +75,27 @@ fun main() {
             val at = queue.removeFirst()
 
             visited.add(at.hash())
+            at.setValue('O', grid)
             if (at.hashWithDir() == start.hashWithDir()) continue
 
-            allPaths[at.hashWithDir()]?.forEach {
-                val (cost, navigator) = it
-
+            allPaths[at.hashWithDir()]?.forEach { (cost, navigator) ->
                 val backCost = cost - 1L
                 val backNav = navigator.clone().moveBackward()
                 val back = allPaths[backNav.hashWithDir()]
-                if (back != null && back[0].first == backCost) queue.addLast(backNav)
+                if (back?.firstOrNull()?.first == backCost) queue.addLast(backNav)
 
                 val turnLeftCost = cost - 1000L
                 val turnLeftNav = navigator.clone().turnLeft()
                 val turnLeft = allPaths[turnLeftNav.hashWithDir()]
-                if (turnLeft != null && turnLeft[0].first == turnLeftCost) queue.addLast(turnLeftNav)
+                if (turnLeft?.firstOrNull()?.first == turnLeftCost) queue.addLast(turnLeftNav)
 
                 val turnRightCost = cost - 1000L
                 val turnRightNav = navigator.clone().turnRight()
                 val turnRight = allPaths[turnRightNav.hashWithDir()]
-                if (turnRight != null && turnRight[0].first == turnRightCost) queue.addLast(turnRightNav)
+                if (turnRight?.firstOrNull()?.first == turnRightCost) queue.addLast(turnRightNav)
             }
         }
+        grid.joinToString(separator = "\n") { it.map { if (it == '.') ' ' else it }.joinToString(separator = "") }.println()
         visited.size.println()
     }
     part1()

@@ -113,7 +113,7 @@ class GridNavigator(
     fun hash(): Long = x.shl(32) + y
 
     /**
-     * Limited to 28-bit integers
+     * Limited to 30-bit integers
      */
     fun hashWithDir(): Long = x.shl(34) + y.shl(4) + direction.ordinal
     operator fun component1(): Long = x
