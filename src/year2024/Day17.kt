@@ -82,11 +82,11 @@ fun main() {
         run(input.first().first()).println()
     }
 
-    fun test(aSoFar: Long, startIndex: Int): Pair<Long, MutableList<Long>>? {
-        if (startIndex == -1) return aSoFar to run(aSoFar)
+    fun test(aSoFar: Long, startIndex: Int): Long? {
+        if (startIndex == -1) return aSoFar
         val shouldMatch = program.subList(startIndex, program.size).toList()
-        for (i in 0..<8) {
-            val a = aSoFar * 8 + i
+        for (i in 0L..<8L) {
+            val a = aSoFar * 8L + i
             val result = run(a)
             if (result == shouldMatch) {
                 val r = test(a, startIndex - 1)
@@ -97,7 +97,7 @@ fun main() {
     }
 
     fun part2() {
-        test(0L, program.lastIndex)!!.first.println()
+        test(0L, program.lastIndex)!!.println()
     }
 
     part1()
