@@ -1,7 +1,7 @@
 package year2024
 
 import utils.grid.Direction.north
-import utils.grid.GridNavigator
+import utils.grid.Nav
 import utils.Helpers.clone
 import utils.Helpers.findExact
 import utils.Input
@@ -15,29 +15,28 @@ fun main() {
         val grid = originalGrid.map { line -> line.map { it }.toMutableList() }
         val at = start.clone()
         while (true) {
-            grid[at.y.toInt()][at.x.toInt()] = 'X'
-            val c = at.clone().moveForward()
-            if (c.isNotInBound(grid)) break
-            if (c.valueOf(grid) == '#') at.turnRight()
-            at.moveForward()
+            val c = at.setValue('X', grid).valueOrNull(grid, steps = 1)
+            when (c) {
+                null -> break
+                '#' -> at.turnRight()
+                else -> at.moveForward()
+            }
         }
         grid.flatten().count { it == 'X' }.also(::println)
     }
 
-    fun isLoop(start: GridNavigator, grid: List<List<Char>>): Boolean {
+    fun isLoop(start: Nav, grid: List<List<Char>>): Boolean {
         val seen = mutableSetOf<Long>()
         val at = start.clone()
         while (true) {
-            val c = at.clone().moveForward()
-            if (c.isNotInBound(grid)) break
-            if (c.valueOf(grid) == '#') at.turnRight()
-            else {
-                at.moveForward()
-                if (seen.contains(at.hashWithDir())) return true
-                seen.add(at.hashWithDir())
+            when (at.valueOrNull(grid, steps = 1)) {
+                null -> return false
+                '#' -> at.turnRight()
+                else -> at.moveForward()
             }
+            if (seen.contains(at.hashWithDir())) return true
+            seen.add(at.hashWithDir())
         }
-        return false
     }
 
     fun part2() {
@@ -48,8 +47,8 @@ fun main() {
             val c = at.setValue('X', grid).clone().moveForward()
             when {
                 c.isNotInBound(grid) -> break
-                c.valueOf(grid) == '#' -> at.turnRight()
-                c.valueOf(grid) != 'X' -> {
+                c.value(grid) == '#' -> at.turnRight()
+                c.value(grid) != 'X' -> {
                     c.setValue('#', grid)
                     if (isLoop(at, grid)) count++
                     c.setValue(' ', grid)

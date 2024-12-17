@@ -5,7 +5,7 @@ import utils.Helpers.println
 import utils.Input
 import utils.grid.Direction.east
 import utils.grid.Direction.north
-import utils.grid.GridNavigator
+import utils.grid.Nav
 import java.util.*
 import kotlin.collections.ArrayDeque
 
@@ -14,9 +14,9 @@ fun main() {
     val start = grid.findExact { it == 'S' }!!.turn(east)
     val end = grid.findExact { it == 'E' }!!
 
-    fun findBest(): Triple<Long, Set<Long>, GridNavigator> {
+    fun findBest(): Triple<Long, Set<Long>, Nav> {
         val visited = mutableSetOf<Long>()
-        val queue = PriorityQueue<Triple<Long, Set<Long>, GridNavigator>> { a, b -> a.first.compareTo(b.first) }
+        val queue = PriorityQueue<Triple<Long, Set<Long>, Nav>> { a, b -> a.first.compareTo(b.first) }
         queue.add(Triple(0L, setOf(start.hash()), start))
         while (queue.isNotEmpty()) {
             val triple = queue.poll()
@@ -27,7 +27,7 @@ fun main() {
             if (navigator.hash() == end.hash()) return triple
 
             val c = navigator.clone().moveForward()
-            if (c.valueOf(grid) != '#') queue.add(Triple(cost + 1L, path + c.hash(), c))
+            if (c.value(grid) != '#') queue.add(Triple(cost + 1L, path + c.hash(), c))
             val a = navigator.clone().turnLeft()
             queue.add(Triple(cost + 1000L, path + a.hash(), a))
             val b = navigator.clone().turnRight()
@@ -40,9 +40,9 @@ fun main() {
         findBest().first.println()
     }
 
-    fun fillGrid(maxCost: Long): MutableMap<Long, MutableList<Pair<Long, GridNavigator>>> {
-        val visited = mutableMapOf<Long, MutableList<Pair<Long, GridNavigator>>>()
-        val queue = PriorityQueue<Pair<Long, GridNavigator>> { a, b -> a.first.compareTo(b.first) }
+    fun fillGrid(maxCost: Long): MutableMap<Long, MutableList<Pair<Long, Nav>>> {
+        val visited = mutableMapOf<Long, MutableList<Pair<Long, Nav>>>()
+        val queue = PriorityQueue<Pair<Long, Nav>> { a, b -> a.first.compareTo(b.first) }
         queue.add(Pair(0L, start))
         while (queue.isNotEmpty()) {
             val triple = queue.poll()
@@ -59,7 +59,7 @@ fun main() {
             val b = navigator.clone().turnRight()
             queue.add(Pair(cost + 1000L, b))
             val c = navigator.clone().moveForward()
-            if (c.valueOf(grid) != '#') queue.add(Pair(cost + 1L, c))
+            if (c.value(grid) != '#') queue.add(Pair(cost + 1L, c))
         }
         return visited
     }
@@ -67,7 +67,7 @@ fun main() {
     fun part2() {
         val lowestCost = findBest().first
         val allPaths = fillGrid(lowestCost)
-        val queue = ArrayDeque<GridNavigator>()
+        val queue = ArrayDeque<Nav>()
         queue.add(end.clone().turn(north))
         queue.add(end.clone().turn(east))
         val visited = mutableSetOf<Long>()

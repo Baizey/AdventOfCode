@@ -4,8 +4,8 @@ import utils.grid.Direction.*
 import kotlin.math.abs
 import kotlin.math.min
 
-class Polygon(points: List<GridNavigator>) {
-    data class Side(var first: GridNavigator, var second: GridNavigator) {
+class Polygon(points: List<Nav>) {
+    data class Side(var first: Nav, var second: Nav) {
         fun clone(): Side = Side(first.clone(), second.clone())
 
         fun direction() =
@@ -20,10 +20,10 @@ class Polygon(points: List<GridNavigator>) {
     }
 
     val sides: List<Side>
-    val corners: List<GridNavigator>
+    val corners: List<Nav>
 
     init {
-        corners = points.map(GridNavigator::clone)
+        corners = points.map(Nav::clone)
         sides = corners.mapIndexed { i, start ->
             val end = if (i == corners.lastIndex) corners[0] else corners[i + 1]
             Side(start, end)

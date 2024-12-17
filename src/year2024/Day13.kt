@@ -2,19 +2,19 @@ package year2024
 
 import utils.*
 import utils.Helpers.println
-import utils.grid.GridNavigator
+import utils.grid.Nav
 
 fun main() {
     val input = Input.get(2024, 13).asLongLines()
 
-    data class Data(val a: GridNavigator, val b: GridNavigator, val c: GridNavigator)
+    data class Data(val a: Nav, val b: Nav, val c: Nav)
 
     val data = mutableListOf<Data>()
     for (i in 0..input.lastIndex step 4) data.add(
         Data(
-            GridNavigator(input[i + 0][0], input[i + 0][1]),
-            GridNavigator(input[i + 1][0], input[i + 1][1]),
-            GridNavigator(input[i + 2][0], input[i + 2][1])
+            Nav(input[i + 0][0], input[i + 0][1]),
+            Nav(input[i + 1][0], input[i + 1][1]),
+            Nav(input[i + 2][0], input[i + 2][1])
         )
     )
 

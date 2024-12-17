@@ -1,6 +1,6 @@
 package year2024
 
-import utils.grid.GridNavigator
+import utils.grid.Nav
 import utils.Helpers.findMatches
 import utils.Helpers.println
 import utils.Input
@@ -11,19 +11,19 @@ fun main() {
     fun part1() {
         grid.findMatches { it == 0 }
             .map { start ->
-                val queue = ArrayDeque<GridNavigator>()
+                val queue = ArrayDeque<Nav>()
                 queue.addLast(start)
                 val tops = mutableSetOf<Long>()
                 while (queue.isNotEmpty()) {
                     val current = queue.removeFirst()
-                    if (current.valueOf(grid) == 9) {
+                    if (current.value(grid) == 9) {
                         tops.add(current.hash())
                         continue
                     }
-                    val next = current.valueOf(grid) + 1
+                    val next = current.value(grid) + 1
                     current.xyDirs()
                         .filter { it.isInBound(grid) }
-                        .filter { it.valueOf(grid) == next }
+                        .filter { it.value(grid) == next }
                         .forEach { queue.addLast(it) }
                 }
                 tops.size
@@ -35,19 +35,19 @@ fun main() {
     fun part2() {
         grid.findMatches { it == 0 }
             .map { start ->
-                val queue = ArrayDeque<GridNavigator>()
+                val queue = ArrayDeque<Nav>()
                 queue.addLast(start)
                 var tops = 0L
                 while (queue.isNotEmpty()) {
                     val current = queue.removeFirst()
-                    if (current.valueOf(grid) == 9) {
+                    if (current.value(grid) == 9) {
                         tops++
                         continue
                     }
-                    val next = current.valueOf(grid) + 1
+                    val next = current.value(grid) + 1
                     current.xyDirs()
                         .filter { it.isInBound(grid) }
-                        .filter { it.valueOf(grid) == next }
+                        .filter { it.value(grid) == next }
                         .forEach { queue.addLast(it) }
                 }
                 tops

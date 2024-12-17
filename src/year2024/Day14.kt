@@ -3,16 +3,16 @@ package year2024
 import utils.*
 import utils.Helpers.println
 import utils.grid.Direction
-import utils.grid.GridNavigator
+import utils.grid.Nav
 
 fun main() {
     val input = Input.get(2024, 14).asLongLines()
 
-    data class Robot(val at: GridNavigator, val velocity: GridNavigator)
+    data class Robot(val at: Nav, val velocity: Nav)
 
     fun display(maxX: Int, maxY: Int, robots: List<Robot>) {
         val grid = MutableList(maxY) { MutableList(maxX) { 0 } }
-        robots.forEach { it.at.setValue(it.at.valueOf(grid) + 1, grid) }
+        robots.forEach { it.at.setValue(it.at.value(grid) + 1, grid) }
         grid[maxY / 2] = MutableList(maxX) { -1 }
         grid.forEach { it[maxX / 2] = -1 }
         grid.joinToString(separator = "\n") { line ->
@@ -27,7 +27,7 @@ fun main() {
     }
 
     fun part1() {
-        val robots = input.map { Robot(GridNavigator(it[0], it[1]), GridNavigator(it[2], it[3])) }
+        val robots = input.map { Robot(Nav(it[0], it[1]), Nav(it[2], it[3])) }
         val maxX = 101
         val maxY = 103
         robots.forEach { robot ->
@@ -66,7 +66,7 @@ fun main() {
     }
 
     fun part2() {
-        val robots = input.map { Robot(GridNavigator(it[0], it[1]), GridNavigator(it[2], it[3])) }
+        val robots = input.map { Robot(Nav(it[0], it[1]), Nav(it[2], it[3])) }
         val maxX = 101
         val maxY = 103
         var time = 0L

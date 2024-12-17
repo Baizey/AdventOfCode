@@ -1,6 +1,6 @@
 package year2024
 
-import utils.grid.GridNavigator
+import utils.grid.Nav
 import utils.Helpers.findMatches
 import utils.Helpers.println
 import utils.Helpers.surround
@@ -13,13 +13,13 @@ fun main() {
         val seen = mutableSetOf<Long>()
         grid.findMatches { it != '.' }
             .sumOf { start ->
-                val type = start.valueOf(grid)
+                val type = start.value(grid)
                 if (seen.contains(start.hash())) 0L
                 else {
                     var area = 0L
                     var perimeter = 0L
 
-                    val queue = ArrayDeque<GridNavigator>()
+                    val queue = ArrayDeque<Nav>()
                     queue.add(start)
                     while (queue.isNotEmpty()) {
                         val at = queue.removeFirst()
@@ -27,7 +27,7 @@ fun main() {
                         seen.add(at.hash())
                         area++
                         at.xyDirs().forEach {
-                            if (it.isNotInBound(grid) || it.valueOf(grid) != type) perimeter++
+                            if (it.isNotInBound(grid) || it.value(grid) != type) perimeter++
                             else queue.addLast(it)
                         }
                     }
@@ -41,30 +41,30 @@ fun main() {
         val seenArea = mutableSetOf<Long>()
         grid.findMatches { it != '.' }
             .sumOf { start ->
-                val type = start.valueOf(grid)
+                val type = start.value(grid)
                 if (seenArea.contains(start.hash())) 0L
                 else {
                     var area = 0L
-                    val perimeter = mutableMapOf<Long, GridNavigator>()
-                    val queue = ArrayDeque<GridNavigator>()
+                    val perimeter = mutableMapOf<Long, Nav>()
+                    val queue = ArrayDeque<Nav>()
                     queue.add(start)
                     while (queue.isNotEmpty()) {
                         val at = queue.removeFirst()
                         if (seenArea.contains(at.hash())) continue
                         seenArea.add(at.hash())
                         area++
-                        at.xyDirs().forEach { if (it.valueOrNullOf(grid) != type) perimeter[it.hashWithDir()] = it else queue.addLast(it) }
+                        at.xyDirs().forEach { if (it.valueOrNull(grid) != type) perimeter[it.hashWithDir()] = it else queue.addLast(it) }
                     }
 
                     val sides = perimeter.values.toList().count { edge ->
                         if (!perimeter.containsKey(edge.hashWithDir())) false
                         else {
-                            var t = edge.copy().turnLeft().moveForward().turnRight()
+                            var t = edge.clone().turnLeft().moveForward().turnRight()
                             while (perimeter.containsKey(t.hashWithDir())) {
                                 perimeter.remove(t.hashWithDir())
                                 t.turnLeft().moveForward().turnRight()
                             }
-                            t = edge.copy()
+                            t = edge.clone()
                             while (perimeter.containsKey(t.hashWithDir())) {
                                 perimeter.remove(t.hashWithDir())
                                 t.turnRight().moveForward().turnLeft()

@@ -1,16 +1,16 @@
 package utils.grid
 
 @Suppress("EnumEntryName")
-enum class Direction {
-    unknown,
-    north,
-    northeast,
-    east,
-    southeast,
-    south,
-    southwest,
-    west,
-    northwest;
+enum class Direction(val deltaX: Int, val deltaY: Int) {
+    unknown(0, 0),
+    north(0, -1),
+    northeast(+1, -1),
+    east(+1, 0),
+    southeast(+1, +1),
+    south(0, +1),
+    southwest(-1, +1),
+    west(-1, 0),
+    northwest(-1, -1);
 
     companion object {
         val xyDirs = listOf(north, east, south, west)

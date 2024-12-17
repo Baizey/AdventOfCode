@@ -1,13 +1,13 @@
 package year2024
 
-import utils.grid.GridNavigator
+import utils.grid.Nav
 import utils.Input
 
 fun main() {
     val grid = Input.get(2024, 4).asCharGrid()
 
     val letters = arrayOf('M', 'A', 'S')
-    fun walk(at: GridNavigator): Boolean {
+    fun walk(at: Nav): Boolean {
         for (letter in letters) {
             if (at.isNotInBound(grid))
                 return false
@@ -25,7 +25,7 @@ fun main() {
         for (x in 0..<maxX) {
             for (y in 0..<maxY) {
                 if (grid[y][x] == 'X')
-                    for (d in GridNavigator(x, y).allDirs())
+                    for (d in Nav(x, y).allDirs())
                         if (walk(d))
                             result++
             }
@@ -40,11 +40,11 @@ fun main() {
 
         for (x in 0..<maxX) {
             for (y in 0..<maxY) {
-                val at = GridNavigator(x, y)
-                if (at.valueOf(grid) != 'A') continue
+                val at = Nav(x, y)
+                if (at.value(grid) != 'A') continue
                 val dirs = at.diagonalDirs()
                 if (dirs.any { it.isNotInBound(grid) }) continue
-                val chars = dirs.map { it.valueOf(grid) }
+                val chars = dirs.map { it.value(grid) }
                 if (chars[0] == chars[2]) continue
                 if (chars.count { it == 'M' } != 2) continue
                 if (chars.count { it == 'S' } != 2) continue

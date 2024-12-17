@@ -3,7 +3,7 @@ package utils
 import utils.grid.Direction.unknown
 import utils.Input.submit
 import utils.grid.Direction
-import utils.grid.GridNavigator
+import utils.grid.Nav
 
 object Helpers {
     fun Any.println(level: Int? = null) = if (level != null) submit(level) else println(this)
@@ -17,41 +17,41 @@ object Helpers {
         return top + middle + bottom
     }
 
-    fun <T> List<List<T>>.findExact(filter: (T) -> Boolean): GridNavigator? {
+    fun <T> List<List<T>>.findExact(filter: (T) -> Boolean): Nav? {
         val maxY = this.lastIndex
         val maxX = this[0].lastIndex
         for (y in 0..maxY)
             for (x in 0..maxX)
-                if (filter(this[y][x])) return GridNavigator(x, y)
+                if (filter(this[y][x])) return Nav(x, y)
         return null
     }
 
-    fun <T> List<List<T>>.findMatches(filter: (T) -> Boolean): List<GridNavigator> {
-        val result = mutableListOf<GridNavigator>()
+    fun <T> List<List<T>>.findMatches(filter: (T) -> Boolean): List<Nav> {
+        val result = mutableListOf<Nav>()
         val maxY = this.lastIndex
         val maxX = this[0].lastIndex
         for (y in 0..maxY)
             for (x in 0..maxX)
                 if (filter(this[y][x]))
-                    result.add(GridNavigator(x, y))
+                    result.add(Nav(x, y))
         return result
     }
 
-    fun <T> List<List<T>>.groupMatches(filter: (T) -> Boolean = { false }): Map<T, List<GridNavigator>> {
-        val result = mutableMapOf<T, MutableList<GridNavigator>>()
+    fun <T> List<List<T>>.groupMatches(filter: (T) -> Boolean = { false }): Map<T, List<Nav>> {
+        val result = mutableMapOf<T, MutableList<Nav>>()
         val maxY = this.lastIndex
         val maxX = this[0].lastIndex
         for (y in 0..maxY)
             for (x in 0..maxX)
                 if (filter(this[y][x]))
-                    result.computeIfAbsent(this[y][x]) { mutableListOf() }.add(GridNavigator(x, y))
+                    result.computeIfAbsent(this[y][x]) { mutableListOf() }.add(Nav(x, y))
         return result
     }
 
     class Jump {
-        val distances = Array(Direction.entries.size) { GridNavigator(-1, -1) }
-        fun move(navigator: GridNavigator): GridNavigator {
-            val moves = get(navigator.direction)
+        val distances = Array(Direction.entries.size) { Nav(-1, -1) }
+        fun move(navigator: Nav): Nav {
+            val moves = get(navigator.dir)
             navigator.x = moves.x
             navigator.y = moves.y
             return navigator
@@ -64,16 +64,16 @@ object Helpers {
 
     fun <T> List<List<T>>.createJumpMap(
         isBlocker: (T) -> Boolean,
-        dirs: (GridNavigator) -> List<GridNavigator> = { it.allDirs() },
+        dirs: (Nav) -> List<Nav> = { it.allDirs() },
     ): List<List<Jump>> {
         val result = this.map { line -> line.map { Jump() } }
         val startPoints = this.findMatches(isBlocker)
         startPoints.forEach { blocker ->
             dirs(blocker).forEach { start ->
                 val dir = start.clone()
-                val backDir = dir.direction.turnAround().ordinal
-                while (dir.isInBound(this) && !isBlocker(dir.valueOf(this))) {
-                    val jump = dir.valueOf(result)
+                val backDir = dir.dir.turnAround().ordinal
+                while (dir.isInBound(this) && !isBlocker(dir.value(this))) {
+                    val jump = dir.value(result)
                     jump.distances[backDir] = start
                     dir.moveForward()
                 }

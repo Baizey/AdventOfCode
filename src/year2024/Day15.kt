@@ -6,7 +6,7 @@ import utils.Helpers.clone
 import utils.Helpers.findExact
 import utils.Helpers.findMatches
 import utils.Helpers.println
-import utils.grid.GridNavigator
+import utils.grid.Nav
 
 fun main() {
     val box = 'O'
@@ -20,21 +20,15 @@ fun main() {
     val startGrid = input.subList(0, input.indexOf("")).map { it.toCharArray().toMutableList() }
     val actions = input.subList(input.indexOf("") + 1, input.size).joinToString(separator = "").toCharArray()
 
-    fun GridNavigator.isWall(grid: List<MutableList<Char>>): Boolean = this.valueOf(grid) == wall
-    fun GridNavigator.isOpen(grid: List<MutableList<Char>>): Boolean = this.valueOf(grid) == open
-    fun GridNavigator.isBox1(grid: List<MutableList<Char>>): Boolean = this.valueOf(grid) == box1
-    fun GridNavigator.isBox2(grid: List<MutableList<Char>>): Boolean = this.valueOf(grid) == box2
-    fun GridNavigator.isBox(grid: List<MutableList<Char>>): Boolean = when (this.valueOf(grid)) {
+    fun Nav.isWall(grid: List<MutableList<Char>>): Boolean = this.value(grid) == wall
+    fun Nav.isOpen(grid: List<MutableList<Char>>): Boolean = this.value(grid) == open
+    fun Nav.isBox1(grid: List<MutableList<Char>>): Boolean = this.value(grid) == box1
+    fun Nav.isBox2(grid: List<MutableList<Char>>): Boolean = this.value(grid) == box2
+    fun Nav.isBox(grid: List<MutableList<Char>>): Boolean = when (this.value(grid)) {
         box -> true
         box1 -> true
         box2 -> true
         else -> false
-    }
-
-    fun display(at: GridNavigator, grid: List<MutableList<Char>>) {
-        at.setValue(bot, grid)
-        grid.joinToString(separator = "\n") { it.joinToString(separator = "") }.println()
-        at.setValue(open, grid)
     }
 
     fun part1() {
@@ -80,10 +74,10 @@ fun main() {
         val at = grid.findExact { it == bot }!!
         at.setValue(open, grid)
 
-        fun canMove(pos: GridNavigator): Boolean {
+        fun canMove(pos: Nav): Boolean {
             return if (pos.isOpen(grid)) true
             else if (pos.isWall(grid)) false
-            else when (pos.direction) {
+            else when (pos.dir) {
                 north, south -> {
                     val canMoveDirect = canMove(pos.clone().moveForward())
                     val canMoveSide =
@@ -97,19 +91,19 @@ fun main() {
             }
         }
 
-        fun move(pos: GridNavigator) {
+        fun move(pos: Nav) {
             if (pos.isOpen(grid)) return
-            when (pos.direction) {
+            when (pos.dir) {
                 north, south -> {
                     val other = if (pos.isBox1(grid)) pos.clone().move(east, 1L) else pos.clone().move(west, 1L)
                     move(pos.clone().moveForward())
                     move(other.clone().moveForward())
 
-                    var c = pos.valueOf(grid)
+                    var c = pos.value(grid)
                     pos.setValue(open, grid)
                     pos.moveForward().setValue(c, grid)
 
-                    c = other.valueOf(grid)
+                    c = other.value(grid)
                     other.setValue(open, grid)
                     other.moveForward().setValue(c, grid)
 

@@ -1,6 +1,6 @@
 package year2024
 
-import utils.grid.GridNavigator
+import utils.grid.Nav
 import utils.Helpers.groupMatches
 import utils.Helpers.println
 import utils.Input
@@ -20,8 +20,8 @@ fun main() {
                         val deltaX = a.x - b.x
                         val deltaY = a.y - b.y
 
-                        val dead1 = GridNavigator(b.x - deltaX, b.y - deltaY)
-                        val dead2 = GridNavigator(b.x + 2 * deltaX, b.y + 2 * deltaY)
+                        val dead1 = Nav(b.x - deltaX, b.y - deltaY)
+                        val dead2 = Nav(b.x + 2 * deltaX, b.y + 2 * deltaY)
                         if (dead1.isInBound(input)) nodes.add(dead1.hash())
                         if (dead2.isInBound(input)) nodes.add(dead2.hash())
                     }
