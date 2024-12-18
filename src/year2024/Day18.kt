@@ -69,8 +69,7 @@ fun main() {
 
         for (i in fallen..allWalls.lastIndex) {
             val walls = allWalls.take(i).associateBy { it.hash() }
-            val unsolvable = solve(start, end, walls) == null
-            if (unsolvable) {
+            if (solve(start, end, walls) == null) {
                 listOf(allWalls[i - 1] - southeast).map { "${it.x},${it.y}" }.first().println()
                 return
             }
