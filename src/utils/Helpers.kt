@@ -1,8 +1,6 @@
 package utils
 
-import utils.grid.Direction.none
 import utils.Input.submit
-import utils.grid.Direction
 import utils.grid.Nav
 
 object Helpers {
@@ -10,11 +8,11 @@ object Helpers {
 
     fun <T> List<List<T>>.clone() = this.map { line -> line.map { it }.toMutableList() }
 
-    fun <T> List<List<T>>.surround(symbol: T): List<List<T>> {
+    fun <T> List<List<T>>.surround(symbol: T): List<MutableList<T>> {
         val top = listOf(List(this[0].size + 2) { symbol })
         val middle = map { line -> listOf(symbol) + line + listOf(symbol) }
         val bottom = listOf(List(this[0].size + 2) { symbol })
-        return top + middle + bottom
+        return (top + middle + bottom).map { it.toMutableList() }
     }
 
     fun <T> List<List<T>>.findExact(filter: (T) -> Boolean): Nav? {

@@ -41,7 +41,7 @@ class Nav(var x: Long, var y: Long, var dir: Direction = none) {
         return this
     }
 
-    fun <T> isInBound(grid: List<List<T>>, atX: Long = x, atY: Long = y): Boolean = isInBound(0L, grid[0].size.toLong(), 0L, grid.size.toLong(), atX, atY)
+    fun <T> isInBound(grid: List<List<T>>, atX: Long = x, atY: Long = y): Boolean = isInBound(0L, grid[0].lastIndex.toLong(), 0L, grid.lastIndex.toLong(), atX, atY)
     fun <T> isNotInBound(grid: List<List<T>>, atX: Long = x, atY: Long = y): Boolean = !isInBound(grid, atX, atY)
 
     fun clone(inputDir: Direction = dir, steps: Long = 0L): Nav {
@@ -72,8 +72,10 @@ class Nav(var x: Long, var y: Long, var dir: Direction = none) {
     }
 
     companion object {
-        fun isInBound(minX: Long, maxX: Long, minY: Long, maxY: Long, atX: Long, atY: Long): Boolean = atX in minX..<maxX && atY in minY..<maxY
+        fun isInBound(minX: Long, maxX: Long, minY: Long, maxY: Long, atX: Long, atY: Long): Boolean = atX in minX..maxX && atY in minY..maxY
     }
+
+    override fun toString(): String = "($x, $y) $dir"
 
     operator fun component1(): Long = x
     operator fun component2(): Long = y
