@@ -10,12 +10,12 @@ fun main() {
 
     fun isPossible(word: String): Boolean {
         val lookup = (word.map { false } + listOf(true)).toMutableList()
-        for (wAt in word.lastIndex downTo 0) {
+        for (at in word.lastIndex downTo 0) {
             for (p in patterns) {
-                if (p.length + wAt > word.length) continue
-                if (p.indices.any { p[it] != word[wAt + it] }) continue
-                if (lookup[wAt + p.length]) {
-                    lookup[wAt] = true
+                if (p.length + at > word.length) continue
+                if (p.indices.any { p[it] != word[at + it] }) continue
+                if (lookup[at + p.length]) {
+                    lookup[at] = true
                     break
                 }
             }
@@ -29,11 +29,11 @@ fun main() {
 
     fun mutations(word: String): Long {
         val lookup = (word.map { 0L } + listOf(1L)).toMutableList()
-        for (wAt in word.lastIndex downTo 0) {
+        for (at in word.lastIndex downTo 0) {
             for (p in patterns) {
-                if (p.length + wAt > word.length) continue
-                if (p.indices.any { p[it] != word[wAt + it] }) continue
-                lookup[wAt] += lookup[wAt + p.length]
+                if (p.length + at > word.length) continue
+                if (p.indices.any { p[it] != word[at + it] }) continue
+                lookup[at] += lookup[at + p.length]
             }
         }
         return lookup.first()
