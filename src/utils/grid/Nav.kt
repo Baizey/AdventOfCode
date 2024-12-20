@@ -5,7 +5,24 @@ import utils.grid.Direction.none
 class Nav(var x: Long, var y: Long, var dir: Direction = none) {
     constructor(x: Int, y: Int, direction: Direction = none) : this(x.toLong(), y.toLong(), direction)
 
-    fun xyDirs(): List<Nav> = Direction.xyDirs.map { this + it }
+    fun xyDirs(stepsAway: Long = 1L): List<Nav> {
+        return if (stepsAway == 1L)
+            Direction.xyDirs.map { this + it }
+        else {
+            val r = mutableListOf<Nav>()
+            Direction.xyDirs.forEach { dir ->
+                for (i in 1L..stepsAway) {
+                    val tmp = clone().turn(dir).moveForward(i)
+                    r.add(tmp)
+                    for (j in stepsAway - i downTo 1L) {
+                        r.add(tmp.clone().turnRight().moveForward(j))
+                    }
+                }
+            }
+            r
+        }
+    }
+
     fun diagonalDirs(): List<Nav> = Direction.diagonalDirs.map { this + it }
     fun allDirs(): List<Nav> = Direction.allDirs.map { this + it }
 
