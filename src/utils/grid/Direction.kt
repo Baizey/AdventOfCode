@@ -13,9 +13,35 @@ enum class Direction(val deltaX: Int, val deltaY: Int) {
     northwest(-1, -1);
 
     companion object {
+        fun from(x: Long, y: Long): Direction {
+            val newX = x.coerceIn(-1L, 1L).toInt()
+            val newY = y.coerceIn(-1L, 1L).toInt()
+            return entries.first { it.deltaX == newX && it.deltaY == newY }
+        }
+
         val xyDirs = listOf(north, east, south, west)
         val diagonalDirs = listOf(northeast, southeast, southwest, northwest)
         val allDirs = listOf(north, northeast, east, southeast, south, southwest, west, northwest)
+    }
+
+    fun isNorth() = when (this) {
+        northwest, northeast, north -> true
+        else -> false
+    }
+
+    fun isSouth() = when (this) {
+        south, southeast, southwest -> true
+        else -> false
+    }
+
+    fun isWest() = when (this) {
+        west, northwest, southwest -> true
+        else -> false
+    }
+
+    fun isEast() = when (this) {
+        east, southeast, northeast -> true
+        else -> false
     }
 
     fun turnAround() = when (this) {

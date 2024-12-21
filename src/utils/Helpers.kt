@@ -6,7 +6,8 @@ import utils.grid.Nav
 object Helpers {
     fun Any.println(level: Int? = null) = if (level != null) submit(level) else println(this)
 
-    fun <T> List<List<T>>.clone() = this.map { line -> line.map { it }.toMutableList() }
+    fun <T> List<List<T>>.clone() = map { line -> line.map { it }.toMutableList() }
+    fun <T> List<List<T>>.display() = joinToString(separator = "\n") { it.joinToString(separator = "") }.println()
 
     fun <T> List<List<T>>.surround(symbol: T): List<MutableList<T>> {
         val top = listOf(List(this[0].size + 2) { symbol })

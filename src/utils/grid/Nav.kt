@@ -70,6 +70,8 @@ class Nav(var x: Long, var y: Long, var dir: Direction = none) {
     override fun hashCode(): Int = x.toInt().shl(16) + y.toInt()
     override fun equals(other: Any?) = other is Nav && hashWithDir() == other.hashWithDir()
 
+    fun xyIntersects(other: Nav): List<Nav> = listOf(Nav(other.x, y), Nav(x, other.y))
+
     /**
      * Limited to 32-bit integers
      */
