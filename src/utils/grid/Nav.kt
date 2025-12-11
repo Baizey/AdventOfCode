@@ -92,6 +92,11 @@ class Nav(var x: Long, var y: Long, var dir: Direction = none) {
 
     companion object {
         fun isInBound(minX: Long, maxX: Long, minY: Long, maxY: Long, atX: Long, atY: Long): Boolean = atX in minX..maxX && atY in minY..maxY
+
+        fun <T> each(grid: List<List<T>>): Sequence<Nav> =
+            grid.asSequence().flatMapIndexed { y, row -> row.indices.map { x -> Nav(x.toLong(), y.toLong()) } }
+
+        fun <T> List<List<T>>.navEach(): Sequence<Nav> = each(this)
     }
 
     override fun toString(): String = "($x, $y) $dir"

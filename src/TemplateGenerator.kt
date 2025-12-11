@@ -4,7 +4,7 @@ import java.time.Month
 import kotlin.math.min
 
 fun main() {
-    TemplateGenerator.generate(2024)
+    TemplateGenerator.generate(2025)
 }
 
 object TemplateGenerator {
@@ -21,14 +21,15 @@ object TemplateGenerator {
             fun main() {
                 val input = Input.get($year, $day)
                 
-                fun part1() {
-                    
+                fun part1(): Any {
+                    return 0
                 }
-                fun part2() {
-                    
+                fun part2(): Any {
+                    return 0
                 }
-                part1()
-                part2()
+                
+                println("Part 1: " + part1())
+                println("Part 2: " + part2())
             }
         """.trimIndent()
                 val dayFile = File("src\\year$year\\Day$dayWithStart.kt")

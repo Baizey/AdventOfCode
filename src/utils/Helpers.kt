@@ -6,6 +6,19 @@ import utils.grid.Nav
 object Helpers {
     fun Any.println(level: Int? = null) = if (level != null) submit(level) else println(this)
 
+    fun <T> List<List<T>>.splitBy(splitBy: (List<T>) -> Boolean): List<List<List<T>>> {
+        val result = mutableListOf<List<List<T>>>()
+        var tmp = mutableListOf<List<T>>()
+        this.forEach {
+            if (splitBy(it)) {
+                result.add(tmp)
+                tmp = mutableListOf()
+            } else tmp.add(it)
+        }
+        if (tmp.isNotEmpty()) result.add(tmp)
+        return result
+    }
+
     fun <T> List<List<T>>.clone() = map { line -> line.map { it }.toMutableList() }
     fun <T> List<List<T>>.display() = joinToString(separator = "\n") { it.joinToString(separator = "") }.println()
 
