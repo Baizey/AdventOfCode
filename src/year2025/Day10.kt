@@ -22,6 +22,7 @@ fun main() {
             val pattern = line.substring(line.indexOf('[') + 1, line.indexOf(']')).toCharArray().map { it == on }.toBooleanArray()
             val jolt = line.substring(line.indexOf('{') + 1, line.indexOf('}')).split(",").map { it.toLong() }.toLongArray()
             val buttons = line.substring(line.indexOf(']') + 1, line.indexOf('{')).trim().split(" ").map { b -> b.substring(1, b.length - 1).split(",").map { it.toInt() } }
+                .sortedBy { -it.size }
             Machine(pattern, buttons, jolt)
         }
 
