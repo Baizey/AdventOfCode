@@ -11,7 +11,7 @@ fun main() {
         var max = 0L
         for (i in input.indices) {
             val a = input[i]
-            for (j in i + 1 until input.size) {
+            for (j in i + 1..<input.size) {
                 val b = input[j]
                 max = maxOf(max, (abs(a.x - b.x) + 1) * (abs(a.y - b.y) + 1))
             }
@@ -23,9 +23,9 @@ fun main() {
         var max = 0L
         for (i in input.indices) {
             val a = input[i]
-            for (j in i + 1 until input.size) {
+            for (j in i + 1..<input.size) {
                 val b = input[j]
-                val value = maxOf(max, (abs(a.x - b.x) + 1) * (abs(a.y - b.y) + 1))
+                val value = (abs(a.x - b.x) + 1) * (abs(a.y - b.y) + 1)
                 if (value <= max) continue
 
                 val minX = minOf(a.x, b.x)
